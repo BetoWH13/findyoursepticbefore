@@ -181,6 +181,10 @@ a:focus {
   padding: 3.5rem 0 2.5rem;
 }
 
+.hero-inner {
+  padding-top: 2.9rem;
+}
+
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(280px, 390px);
@@ -297,7 +301,7 @@ a:focus {
 .hero-diagram-card {
   background:
     linear-gradient(180deg, rgba(63, 45, 32, 0.98), rgba(73, 52, 37, 0.98));
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);
   padding: 1.35rem 1.25rem 1.2rem;
@@ -319,7 +323,7 @@ a:focus {
 .diagram-title {
   position: relative;
   z-index: 1;
-  color: rgba(255,255,255,0.88);
+  color: rgba(255, 255, 255, 0.88);
   font-size: 0.84rem;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -338,7 +342,7 @@ a:focus {
   position: relative;
   z-index: 1;
   margin: 0.65rem 0 0;
-  color: rgba(255,255,255,0.74);
+  color: rgba(255, 255, 255, 0.74);
   font-size: 0.9rem;
   line-height: 1.65;
 }
@@ -354,7 +358,7 @@ a:focus {
 }
 
 .d-house {
-  stroke: rgba(255,255,255,0.32);
+  stroke: rgba(255, 255, 255, 0.32);
   stroke-width: 1.4;
   stroke-dasharray: 4 4;
 }
@@ -389,7 +393,7 @@ a:focus {
 
 .d-label {
   font-size: 12px;
-  fill: rgba(255,255,255,0.76);
+  fill: rgba(255, 255, 255, 0.76);
 }
 
 .d-label-green {
@@ -406,7 +410,51 @@ a:focus {
 
 .d-label-soft {
   font-size: 11px;
-  fill: rgba(255,255,255,0.52);
+  fill: rgba(255, 255, 255, 0.52);
+}
+
+.d-search-zone {
+  fill: rgba(126, 170, 87, 0.08);
+  stroke: rgba(126, 170, 87, 0.45);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 5;
+}
+
+.d-clue {
+  fill: rgba(217, 125, 74, 0.95);
+}
+
+.d-line-zone {
+  fill: rgba(81, 170, 208, 0.08);
+  stroke: rgba(81, 170, 208, 0.45);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 5;
+}
+
+.d-field-zone {
+  fill: rgba(126, 170, 87, 0.08);
+  stroke: rgba(126, 170, 87, 0.45);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 5;
+}
+
+.d-record-box {
+  fill: rgba(126, 170, 87, 0.08);
+  stroke: rgba(126, 170, 87, 0.7);
+  stroke-width: 1.5;
+}
+
+.d-record-box-soft {
+  fill: rgba(255, 255, 255, 0.06);
+  stroke: rgba(255, 255, 255, 0.3);
+  stroke-width: 1.2;
+}
+
+.d-record-zone {
+  fill: rgba(81, 170, 208, 0.08);
+  stroke: rgba(81, 170, 208, 0.38);
+  stroke-width: 1.3;
+  stroke-dasharray: 6 5;
 }
 
 /* Summary strip */
@@ -779,197 +827,8 @@ a:focus {
   font-size: 0.9rem;
 }
 
-/* Footer */
+/* Error page */
 
-.site-footer {
-  background: var(--soil-dark);
-  color: rgba(255,255,255,0.75);
-  padding: 2.3rem 0 1.5rem;
-}
-
-.footer-shell {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 24px;
-}
-
-.footer-brand {
-  margin: 0 0 0.45rem;
-  font-family: var(--font-display);
-  font-size: 1.35rem;
-  color: #fff;
-}
-
-.footer-copy {
-  max-width: 56ch;
-  margin: 0;
-  font-size: 0.95rem;
-}
-
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 18px;
-}
-
-.footer-links a {
-  color: rgba(255,255,255,0.84);
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.footer-legal {
-  margin-top: 1.3rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(255,255,255,0.12);
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 24px;
-}
-
-.footer-legal p {
-  margin: 0;
-  font-size: 0.84rem;
-  color: rgba(255,255,255,0.58);
-}
-
-/* Responsive */
-
-@media (max-width: 1040px) {
-  .hero-grid,
-  .records-layout,
-  .state-bridge-shell,
-  .summary-grid,
-  .step-grid,
-  .target-grid,
-  .method-grid,
-  .notice-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .hero-diagram-card {
-    grid-column: span 2;
-  }
-}
-
-@media (max-width: 760px) {
-  body {
-    font-size: 16px;
-  }
-
-  .container {
-    width: min(calc(100% - 1rem), var(--container));
-  }
-
-  .header-shell {
-    min-height: 64px;
-  }
-
-  .site-nav {
-    display: none;
-  }
-
-  .hero {
-    padding: 2rem 0 1.6rem;
-  }
-
-  .hero-grid,
-  .summary-grid,
-  .step-grid,
-  .target-grid,
-  .method-grid,
-  .records-layout,
-  .notice-grid,
-  .state-bridge-shell,
-  .footer-shell,
-  .footer-legal {
-    grid-template-columns: 1fr;
-  }
-
-  .hero h1,
-  .section-heading h2,
-  .state-bridge-copy h2 {
-    max-width: none;
-  }
-
-  .hero-actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .button {
-    width: 100%;
-  }
-
-  .section {
-    padding: 3.2rem 0;
-  }
-
-  .summary-item,
-  .step-card,
-  .target-card,
-  .method-card,
-  .records-box,
-  .notice-card,
-  .faq-list details,
-  .state-bridge-panel {
-    border-radius: 16px;
-  }
-
-  .notice-card {
-    border-radius: 0 16px 16px 0;
-  }
-
-  .footer-links {
-    gap: 14px;
-  }
-}
-.hero-inner {
-  padding-top: 2.9rem;
-}
-
-.d-search-zone {
-  fill: rgba(126, 170, 87, 0.08);
-  stroke: rgba(126, 170, 87, 0.45);
-  stroke-width: 1.5;
-  stroke-dasharray: 6 5;
-}
-
-.d-clue {
-  fill: rgba(217, 125, 74, 0.95);
-}
-.d-line-zone {
-  fill: rgba(81, 170, 208, 0.08);
-  stroke: rgba(81, 170, 208, 0.45);
-  stroke-width: 1.5;
-  stroke-dasharray: 6 5;
-}
-.d-field-zone {
-  fill: rgba(126, 170, 87, 0.08);
-  stroke: rgba(126, 170, 87, 0.45);
-  stroke-width: 1.5;
-  stroke-dasharray: 6 5;
-}
-.d-record-box {
-  fill: rgba(126, 170, 87, 0.08);
-  stroke: rgba(126, 170, 87, 0.7);
-  stroke-width: 1.5;
-}
-
-.d-record-box-soft {
-  fill: rgba(255, 255, 255, 0.06);
-  stroke: rgba(255, 255, 255, 0.3);
-  stroke-width: 1.2;
-}
-
-.d-record-zone {
-  fill: rgba(81, 170, 208, 0.08);
-  stroke: rgba(81, 170, 208, 0.38);
-  stroke-width: 1.3;
-  stroke-dasharray: 6 5;
-}
 .error-hero {
   padding-top: 4.5rem;
   padding-bottom: 5rem;
@@ -1013,8 +872,159 @@ a:focus {
   margin-top: 0.65rem;
 }
 
+/* Footer */
+
+.site-footer {
+  background: var(--soil-dark);
+  color: rgba(255, 255, 255, 0.75);
+  padding: 2.3rem 0 1.5rem;
+}
+
+.footer-shell {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.footer-brand {
+  margin: 0 0 0.45rem;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: #fff;
+}
+
+.footer-copy {
+  max-width: 56ch;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.footer-links a {
+  color: rgba(255, 255, 255, 0.84);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer-legal {
+  margin-top: 1.3rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.footer-legal p {
+  margin: 0;
+  font-size: 0.84rem;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+/* Responsive */
+
+@media (max-width: 1040px) {
+  .hero-grid,
+  .records-layout,
+  .state-bridge-shell,
+  .summary-grid,
+  .step-grid,
+  .target-grid,
+  .method-grid,
+  .notice-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hero-diagram-card {
+    grid-column: span 2;
+  }
+}
+
 @media (max-width: 860px) {
   .error-card-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  body {
+    font-size: 16px;
+  }
+
+  .container {
+    width: min(calc(100% - 1rem), var(--container));
+  }
+
+  .header-shell {
+    min-height: 64px;
+  }
+
+  .site-nav {
+    display: none;
+  }
+
+  .hero {
+    padding: 2rem 0 1.6rem;
+  }
+
+  .hero-grid,
+  .summary-grid,
+  .step-grid,
+  .target-grid,
+  .method-grid,
+  .records-layout,
+  .notice-grid,
+  .state-bridge-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-shell,
+  .footer-legal {
+    flex-direction: column;
+  }
+
+  .hero h1,
+  .section-heading h2,
+  .state-bridge-copy h2 {
+    max-width: none;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .button {
+    width: 100%;
+  }
+
+  .section {
+    padding: 3.2rem 0;
+  }
+
+  .summary-item,
+  .step-card,
+  .target-card,
+  .method-card,
+  .records-box,
+  .notice-card,
+  .faq-list details,
+  .state-bridge-panel {
+    border-radius: 16px;
+  }
+
+  .notice-card {
+    border-radius: 0 16px 16px 0;
+  }
+
+  .footer-links {
+    gap: 14px;
   }
 }
