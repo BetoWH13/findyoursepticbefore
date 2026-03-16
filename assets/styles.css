@@ -940,3 +940,9 @@ a:focus {
 .d-clue {
   fill: rgba(217, 125, 74, 0.95);
 }
+.d-line-zone {
+  fill: rgba(81, 170, 208, 0.08);
+  stroke: rgba(81, 170, 208, 0.45);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 5;
+}
