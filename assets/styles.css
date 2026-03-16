@@ -946,3 +946,9 @@ a:focus {
   stroke-width: 1.5;
   stroke-dasharray: 6 5;
 }
+.d-field-zone {
+  fill: rgba(126, 170, 87, 0.08);
+  stroke: rgba(126, 170, 87, 0.45);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 5;
+}
