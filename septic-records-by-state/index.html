@@ -49,7 +49,7 @@
 <h1>Septic Records Search</h1>
 
 <p class="hero-lead">
-Looking for the location of a septic tank or drain field?  
+Looking for the location of a septic tank or drain field?
 The original installation permit or septic system record is often the fastest way to find it.
 </p>
 
@@ -72,10 +72,10 @@ Use the guide below to find the agency responsible for septic system records in 
 
 <p class="section-eyebrow">Search Tool</p>
 
-<h2>Find septic records by state and county</h2>
+<h2>Find septic records by state</h2>
 
 <p class="section-lead">
-Start by selecting your state to identify the environmental health department or wastewater agency responsible for septic permits.
+Select your state to identify the environmental health department or wastewater agency responsible for septic permits. You can also add an address note for your own reference while searching.
 </p>
 
 </div>
@@ -83,26 +83,26 @@ Start by selecting your state to identify the environmental health department or
 
 <div class="search-tool">
 
+<div class="search-row">
+
+<div class="field">
+<label for="addressInput">Property address (optional)</label>
+<input type="text" id="addressInput" placeholder="e.g. 123 Oak Lane">
+</div>
+
+<div class="field">
 <label for="stateSelect">Select your state</label>
-
 <select id="stateSelect">
-
-<option value="">Choose a state</option>
-
-<option value="maine">Maine</option>
-<option value="new-hampshire">New Hampshire</option>
-<option value="vermont">Vermont</option>
-<option value="massachusetts">Massachusetts</option>
-<option value="tennessee">Tennessee</option>
-<option value="florida">Florida</option>
-<option value="michigan">Michigan</option>
-<option value="wisconsin">Wisconsin</option>
-<option value="ohio">Ohio</option>
-<option value="washington">Washington</option>
-<option value="california">California</option>
-<option value="alaska">Alaska</option>
-
+<option value="">— All States —</option>
 </select>
+</div>
+
+<div class="field field-button">
+<label for="recordsSearchButton">Run search</label>
+<button id="recordsSearchButton" class="btn-search" type="button">Search →</button>
+</div>
+
+</div>
 
 <div id="searchResult" class="search-result"></div>
 
@@ -122,7 +122,7 @@ Start by selecting your state to identify the environmental health department or
 
 <p class="section-eyebrow">State Agencies</p>
 
-<h2>Programs that regulate septic systems</h2>
+<h2 id="sectionTitle">All State Databases</h2>
 
 <p class="section-lead">
 Most septic permits are issued through environmental health or wastewater management programs.
@@ -131,94 +131,13 @@ The agencies below commonly manage septic system approvals and records.
 
 </div>
 
+<p class="results-count" id="resultsCount">50 states</p>
 
-<div class="target-grid">
+<div class="states-grid" id="statesGrid"></div>
 
-
-<article class="target-card">
-<h3>Maine</h3>
-<p>Subsurface wastewater permits and septic installation records are typically maintained by municipalities and plumbing inspectors.</p>
-<a href="https://www.maine.gov/dhhs/mecdc/environmental-health/plumbing/" target="_blank" rel="noopener">Maine Subsurface Wastewater Program</a>
-</article>
-
-
-<article class="target-card">
-<h3>New Hampshire</h3>
-<p>Septic system permits are managed through the Department of Environmental Services wastewater program.</p>
-<a href="https://www.des.nh.gov/water/septic-systems" target="_blank" rel="noopener">New Hampshire Septic Systems</a>
-</article>
-
-
-<article class="target-card">
-<h3>Vermont</h3>
-<p>Wastewater system and potable water permits include septic system installations and site plans.</p>
-<a href="https://dec.vermont.gov/water/wastewater-system-and-potable-water-supply-permits" target="_blank" rel="noopener">Vermont Wastewater Permit System</a>
-</article>
-
-
-<article class="target-card">
-<h3>Massachusetts</h3>
-<p>Septic systems are regulated under Title 5 and records are often maintained by local boards of health.</p>
-<a href="https://www.mass.gov/septic-systems-title-5" target="_blank" rel="noopener">Massachusetts Title 5 Program</a>
-</article>
-
-
-<article class="target-card">
-<h3>Tennessee</h3>
-<p>Tennessee maintains a searchable statewide septic permit database.</p>
-<a href="https://tdec.tn.gov/filenetsearch" target="_blank" rel="noopener">Tennessee Septic Records Search</a>
-</article>
-
-
-<article class="target-card">
-<h3>Florida</h3>
-<p>Onsite sewage treatment systems are regulated through the Florida Department of Health.</p>
-<a href="https://floridadep.gov/water/onsite-sewage" target="_blank" rel="noopener">Florida Onsite Sewage Program</a>
-</article>
-
-
-<article class="target-card">
-<h3>Michigan</h3>
-<p>County environmental health departments regulate septic systems and maintain local records.</p>
-<a href="https://www.michigan.gov/egle/about/organization/water-resources/septic-systems" target="_blank" rel="noopener">Michigan Septic Systems</a>
-</article>
-
-
-<article class="target-card">
-<h3>Wisconsin</h3>
-<p>Private onsite wastewater treatment systems (POWTS) are regulated statewide.</p>
-<a href="https://dsps.wi.gov/pages/Programs/POWTS/Default.aspx" target="_blank" rel="noopener">Wisconsin POWTS Program</a>
-</article>
-
-
-<article class="target-card">
-<h3>Ohio</h3>
-<p>Household sewage treatment systems are regulated through county health departments.</p>
-<a href="https://odh.ohio.gov/know-our-programs/private-water-systems/septic-systems" target="_blank" rel="noopener">Ohio Septic Systems</a>
-</article>
-
-
-<article class="target-card">
-<h3>Washington</h3>
-<p>Many counties maintain searchable septic permit databases and wastewater system records.</p>
-<a href="https://kingcounty.gov/en/dept/dph/health-safety/environmental-health/on-site-sewage-systems" target="_blank" rel="noopener">Washington Septic Records</a>
-</article>
-
-
-<article class="target-card">
-<h3>California</h3>
-<p>Onsite wastewater treatment systems (OWTS) programs regulate septic systems statewide.</p>
-<a href="https://www.waterboards.ca.gov/water_issues/programs/owts/" target="_blank" rel="noopener">California OWTS Program</a>
-</article>
-
-
-<article class="target-card">
-<h3>Alaska</h3>
-<p>Wastewater system engineering approvals and documentation.</p>
-<a href="https://dec.alaska.gov/water/wastewater/" target="_blank" rel="noopener">Alaska Wastewater Systems</a>
-</article>
-
-
+<div id="noResults" class="no-results" style="display:none;">
+<h3>No results found</h3>
+<p>Try a different state or clear your search.</p>
 </div>
 
 </div>
