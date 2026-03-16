@@ -773,7 +773,77 @@ a:focus {
   font-size: 0.96rem;
 }
 
-/* State bridge */
+/* State feeder */
+
+.section-feeder {
+  background: linear-gradient(180deg, #f4eee5 0%, #fbf8f2 100%);
+  border-top: 1px solid rgba(214, 203, 187, 0.78);
+  border-bottom: 1px solid rgba(214, 203, 187, 0.78);
+}
+
+.feeder-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.feeder-card {
+  background: var(--surface);
+  border: 1px solid rgba(214, 203, 187, 0.95);
+  border-radius: var(--radius-lg);
+  padding: 1.3rem 1.15rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.feeder-tag {
+  margin: 0 0 0.55rem;
+  color: var(--clay);
+  font-size: 0.74rem;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.feeder-card h3 {
+  margin: 0 0 0.55rem;
+  font-size: 1.08rem;
+  line-height: 1.3;
+  color: var(--soil-dark);
+}
+
+.feeder-card h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.feeder-card h3 a:hover,
+.feeder-card h3 a:focus {
+  color: var(--soil);
+}
+
+.feeder-card p {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 0.96rem;
+}
+
+.feeder-note-box {
+  margin-top: 1.25rem;
+  background: rgba(255, 253, 249, 0.82);
+  border: 1px solid rgba(214, 203, 187, 0.95);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.1rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.feeder-note-box p {
+  margin: 0;
+  color: var(--text-faint);
+  font-size: 0.94rem;
+}
+
+/* State bridge legacy */
 
 .state-bridge {
   background: linear-gradient(180deg, #f0ece5 0%, #f6f2ea 100%);
@@ -938,7 +1008,8 @@ a:focus {
   .step-grid,
   .target-grid,
   .method-grid,
-  .notice-grid {
+  .notice-grid,
+  .feeder-grid {
     grid-template-columns: 1fr 1fr;
   }
 
@@ -981,7 +1052,8 @@ a:focus {
   .method-grid,
   .records-layout,
   .notice-grid,
-  .state-bridge-shell {
+  .state-bridge-shell,
+  .feeder-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1016,7 +1088,9 @@ a:focus {
   .records-box,
   .notice-card,
   .faq-list details,
-  .state-bridge-panel {
+  .state-bridge-panel,
+  .feeder-card,
+  .feeder-note-box {
     border-radius: 16px;
   }
 
