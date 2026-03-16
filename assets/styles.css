@@ -1,0 +1,519 @@
+/* =========================================================
+   Septic System Locator Guide
+   Core Stylesheet
+   Light, practical, homeowner-friendly
+========================================================= */
+
+:root {
+  --bg: #f8f6f1;
+  --surface: #ffffff;
+  --surface-soft: #f3efe6;
+  --surface-accent: #e9f1ec;
+
+  --text: #1f2a24;
+  --text-soft: #536157;
+  --text-faint: #6d7a71;
+
+  --heading: #18211d;
+  --line: #d8dfd6;
+  --line-strong: #c5cec5;
+
+  --brand: #2d5a3d;
+  --brand-dark: #21422d;
+  --brand-soft: #dce9df;
+
+  --accent: #8f6b3c;
+  --accent-soft: #f3e8d6;
+
+  --success: #2d5a3d;
+  --warning: #8a5a12;
+
+  --shadow-sm: 0 1px 2px rgba(20, 31, 23, 0.04);
+  --shadow-md: 0 10px 30px rgba(24, 33, 29, 0.06);
+  --shadow-lg: 0 18px 48px rgba(24, 33, 29, 0.08);
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+
+  --max-width: 1120px;
+  --reading-width: 760px;
+
+  --font-body: Georgia, "Times New Roman", serif;
+  --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* =========================================================
+   Base Reset
+========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(to bottom, #fbfaf6 0%, #f8f6f1 100%);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.75;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--brand);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+  transition: color 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
+}
+
+a:hover,
+a:focus {
+  color: var(--brand-dark);
+}
+
+:focus-visible {
+  outline: 3px solid rgba(45, 90, 61, 0.2);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* =========================================================
+   Layout
+========================================================= */
+
+header,
+main,
+footer {
+  width: min(calc(100% - 2rem), var(--max-width));
+  margin: 0 auto;
+}
+
+main {
+  padding-bottom: 4rem;
+}
+
+section {
+  background: var(--surface);
+  border: 1px solid rgba(216, 223, 214, 0.85);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 2rem 1.35rem;
+  margin: 0 0 1.5rem;
+}
+
+article + article {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+
+/* =========================================================
+   Header / Hero
+========================================================= */
+
+header {
+  padding: 2rem 0 1.5rem;
+}
+
+header > p:first-child {
+  display: inline-block;
+  margin: 0 0 1rem;
+  padding: 0.4rem 0.8rem;
+  background: var(--surface-accent);
+  color: var(--brand-dark);
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid #d2e1d6;
+  border-radius: 999px;
+}
+
+header {
+  background:
+    radial-gradient(circle at top right, rgba(233, 241, 236, 0.85), transparent 40%),
+    radial-gradient(circle at top left, rgba(243, 232, 214, 0.65), transparent 34%);
+  border-bottom: 1px solid rgba(216, 223, 214, 0.9);
+}
+
+header h1 {
+  margin: 0;
+  max-width: 12ch;
+  color: var(--heading);
+  font-size: clamp(2.35rem, 5vw, 4.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+}
+
+header > p:nth-of-type(2) {
+  max-width: 34rem;
+  margin: 1rem 0 1rem;
+  color: var(--text-soft);
+  font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+  line-height: 1.55;
+}
+
+header > p:nth-of-type(3) {
+  max-width: var(--reading-width);
+  margin: 0;
+  color: var(--text);
+  font-size: 1.05rem;
+}
+
+header > p:last-child {
+  margin: 1.5rem 0 0;
+}
+
+header > p:last-child a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.9rem 1.2rem;
+  background: var(--brand);
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--font-ui);
+  font-size: 0.96rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  border: 1px solid var(--brand);
+  border-radius: 999px;
+  box-shadow: var(--shadow-md);
+}
+
+header > p:last-child a:hover,
+header > p:last-child a:focus {
+  background: var(--brand-dark);
+  border-color: var(--brand-dark);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   Typography
+========================================================= */
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-ui);
+  color: var(--heading);
+}
+
+h2 {
+  margin: 0 0 1rem;
+  font-size: clamp(1.55rem, 2.3vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1.15rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin: 0 0 1rem;
+  max-width: var(--reading-width);
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+ul,
+ol {
+  margin: 0.25rem 0 1rem 1.25rem;
+  padding: 0;
+  max-width: var(--reading-width);
+}
+
+li {
+  margin-bottom: 0.6rem;
+}
+
+li::marker {
+  color: var(--brand);
+}
+
+strong {
+  color: var(--heading);
+}
+
+/* =========================================================
+   Section Enhancements
+========================================================= */
+
+section > h2 {
+  position: relative;
+  padding-bottom: 0.65rem;
+}
+
+section > h2::after {
+  content: "";
+  display: block;
+  width: 72px;
+  height: 3px;
+  margin-top: 0.7rem;
+  background: linear-gradient(to right, var(--brand), rgba(45, 90, 61, 0.2));
+  border-radius: 999px;
+}
+
+/* Guide steps section styling */
+#guide article {
+  background: linear-gradient(to bottom, #fff 0%, #fcfbf8 100%);
+  border: 1px solid rgba(216, 223, 214, 0.8);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: 1.3rem 1.1rem;
+}
+
+#guide article h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+#guide article h3::before {
+  content: "";
+  flex: 0 0 10px;
+  width: 10px;
+  height: 10px;
+  background: var(--brand);
+  border-radius: 999px;
+  box-shadow: 0 0 0 6px rgba(45, 90, 61, 0.11);
+}
+
+/* Honest note block */
+section:nth-of-type(5) {
+  background: linear-gradient(to bottom, #fffaf2 0%, #fff 100%);
+  border-color: #eadfc9;
+}
+
+section:nth-of-type(5) h2::after {
+  background: linear-gradient(to right, var(--accent), rgba(143, 107, 60, 0.2));
+}
+
+/* Local help / softer CTA block */
+section:last-of-type {
+  background: linear-gradient(to bottom, #eef5f0 0%, #ffffff 100%);
+  border-color: #d5e3d8;
+}
+
+/* =========================================================
+   Lists used as topic hubs
+========================================================= */
+
+section ul li a {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  color: var(--brand-dark);
+}
+
+section ul li a:hover,
+section ul li a:focus {
+  color: var(--brand);
+}
+
+/* =========================================================
+   Footer
+========================================================= */
+
+footer {
+  padding: 1rem 0 3rem;
+  color: var(--text-faint);
+  font-family: var(--font-ui);
+  font-size: 0.94rem;
+}
+
+footer p {
+  margin: 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+/* =========================================================
+   Utility Patterns for Future Pages
+========================================================= */
+
+.note,
+.info-box,
+.soft-box {
+  max-width: var(--reading-width);
+  margin: 1.25rem 0;
+  padding: 1rem 1rem 1rem 1.1rem;
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--brand);
+  border-radius: var(--radius-md);
+}
+
+.warning-box {
+  max-width: var(--reading-width);
+  margin: 1.25rem 0;
+  padding: 1rem 1rem 1rem 1.1rem;
+  background: #fff8ee;
+  border: 1px solid #ebdcc2;
+  border-left: 4px solid var(--warning);
+  border-radius: var(--radius-md);
+}
+
+.quick-links {
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 1.25rem;
+}
+
+.quick-links a {
+  display: block;
+  padding: 1rem 1rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+}
+
+.quick-links a:hover,
+.quick-links a:focus {
+  background: #fcfdfc;
+  border-color: var(--line-strong);
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   Optional Table Styling for Future Record Pages
+========================================================= */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+th,
+td {
+  padding: 0.9rem 0.95rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line);
+}
+
+th {
+  background: #f5f8f5;
+  color: var(--heading);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+tr:last-child td {
+  border-bottom: 0;
+}
+
+/* =========================================================
+   Responsive Adjustments
+========================================================= */
+
+@media (min-width: 760px) {
+  header {
+    padding: 3rem 0 2rem;
+  }
+
+  section {
+    padding: 2.3rem 2rem;
+  }
+
+  #guide article {
+    padding: 1.5rem 1.35rem;
+  }
+
+  .quick-links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    font-size: 19px;
+  }
+
+  header,
+  main,
+  footer {
+    width: min(calc(100% - 3rem), var(--max-width));
+  }
+
+  header {
+    padding: 3.75rem 0 2.35rem;
+  }
+
+  section {
+    padding: 2.6rem 2.4rem;
+    margin-bottom: 1.75rem;
+  }
+}
+
+@media (max-width: 640px) {
+  body {
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  header,
+  main,
+  footer {
+    width: min(calc(100% - 1rem), var(--max-width));
+  }
+
+  header {
+    padding: 1.4rem 0 1.2rem;
+  }
+
+  section {
+    padding: 1.35rem 1rem;
+    border-radius: 16px;
+  }
+
+  #guide article {
+    padding: 1.05rem 0.95rem;
+  }
+
+  h2 {
+    font-size: 1.45rem;
+  }
+
+  h3 {
+    font-size: 1.06rem;
+  }
+
+  header > p:last-child a {
+    width: 100%;
+  }
+}
