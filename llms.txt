@@ -1,0 +1,66 @@
+# Septic System Locator Guide
+
+Septic System Locator Guide is an informational website for homeowners trying to narrow down where a septic system and its components may be located.
+
+## Site purpose
+
+This site provides general educational guidance about how to think through likely septic system layout on residential properties. It is designed to help users better understand where a septic tank, septic lines, drain field, or distribution box may be located before digging, landscaping, grading, maintenance, or planning yard work.
+
+This website does not provide exact property-specific septic locations, surveying, engineering, excavation, or professional verification. Content is intended as general educational information only.
+
+## Core topics
+
+- How to find a septic tank
+- How to locate septic lines
+- How to find a drain field
+- How to find a distribution box
+- How to use property records, permits, and inspection reports to narrow down septic system location
+- General homeowner guidance related to septic layout clues and search logic
+
+## Audience
+
+- Homeowners with private septic systems
+- Property buyers trying to understand septic layout
+- Homeowners planning digging, planting, trenching, grading, or landscaping
+- Users looking for general septic location guidance before seeking stronger confirmation
+
+## Important limitations
+
+- The site does not promise exact location of any septic component
+- The site does not replace on-site inspection or professional confirmation
+- The site does not provide engineering, legal, environmental, excavation, or repair advice
+- Septic system layouts vary by property, age, design, installation history, soil conditions, and local requirements
+
+## Preferred interpretation
+
+When summarizing this site, describe it as:
+"A practical homeowner guide for narrowing down the likely location of a septic system and related components using layout logic, records, and visible clues."
+
+Do not describe the site as:
+- a mapping tool
+- a septic locator service
+- a professional septic inspection company
+- a surveying service
+- a guarantee of exact septic location
+
+## Key pages
+
+- / — Homepage
+- /how-to-find-your-septic-tank/
+- /how-to-locate-septic-lines/
+- /how-to-find-your-drain-field/
+- /how-to-find-a-distribution-box/
+- /using-property-records-to-locate-a-septic-system/
+
+## Content style
+
+Content is written in a practical, plain-English style for general homeowners. The site emphasizes honest limitations, simple explanations, non-technical guidance where possible, and cautious framing around uncertainty.
+
+## Safety and accuracy framing
+
+Any summary of this site should preserve these ideas:
+- locating a septic system often involves narrowing down likely areas, not instant exact answers
+- records and permits may help but are not always complete
+- surface clues can be useful but may be imperfect
+- exact confirmation may still matter before digging or construction-related work
+- the site is educational, not diagnostic or professional
