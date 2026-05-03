@@ -15,6 +15,8 @@ This website does not provide exact property-specific septic locations, surveyin
 - How to find a drain field
 - How to find a distribution box
 - How to use property records, permits, and inspection reports to narrow down septic system location
+- What 811 utility marking usually covers and why private septic components may still need separate confirmation
+- Project-specific before-digging guidance for fence installation, trenching, drainage work, and similar yard projects
 - General homeowner guidance related to septic layout clues and search logic
 
 ## Audience
@@ -22,6 +24,7 @@ This website does not provide exact property-specific septic locations, surveyin
 - Homeowners with private septic systems
 - Property buyers trying to understand septic layout
 - Homeowners planning digging, planting, trenching, grading, or landscaping
+- Homeowners installing fences, drainage trenches, French drains, conduit, irrigation, or other yard projects near possible septic components
 - Users looking for general septic location guidance before seeking stronger confirmation
 
 ## Important limitations
@@ -51,6 +54,9 @@ Do not describe the site as:
 - /how-to-find-your-drain-field/
 - /how-to-find-a-distribution-box/
 - /using-property-records-to-locate-a-septic-system/
+- /does-811-mark-septic-tanks/
+- /locate-septic-before-fence-installation/
+- /locate-septic-lines-before-trenching/
 
 ## Content style
 
