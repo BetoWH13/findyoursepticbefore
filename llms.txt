@@ -18,6 +18,7 @@ This website does not provide exact property-specific septic locations, surveyin
 - What 811 utility marking usually covers and why private septic components may still need separate confirmation
 - Project-specific before-digging guidance for fence installation, trenching, drainage work, landscaping, tree planting, and similar yard projects
 - Guidance for old houses, missing septic records, unclear permit files, and private locating decisions
+- Project-specific septic checks before sheds, deck posts, patios, pools, hardscape, and other permanent yard structures
 - General homeowner guidance related to septic layout clues and search logic
 
 ## Audience
@@ -27,6 +28,7 @@ This website does not provide exact property-specific septic locations, surveyin
 - Homeowners planning digging, planting, trenching, grading, or landscaping
 - Homeowners installing fences, drainage trenches, French drains, conduit, irrigation, or other yard projects near possible septic components
 - Homeowners with older properties, missing records, unclear septic files, or private utility locating questions
+- Homeowners planning sheds, decks, patios, pools, hardscape, or other structures near possible septic components
 - Users looking for general septic location guidance before seeking stronger confirmation
 
 ## Important limitations
@@ -62,6 +64,9 @@ Do not describe the site as:
 - /find-septic-before-landscaping/
 - /old-house-no-septic-records/
 - /private-utility-locator-for-septic/
+- /locate-septic-before-shed-installation/
+- /locate-septic-before-deck-posts/
+- /locate-septic-before-pool-installation/
 
 ## Content style
 
