@@ -175,6 +175,75 @@ a:focus {
   color: var(--soil-dark);
 }
 
+.mobile-menu {
+  display: none;
+  position: relative;
+}
+
+.mobile-menu summary {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--soil-dark);
+  font-size: 0.9rem;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  list-style: none;
+}
+
+.mobile-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.mobile-menu summary::after {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-left: 0.55rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translateY(-1px);
+}
+
+.mobile-menu[open] summary::after {
+  transform: rotate(225deg) translate(-1px, -1px);
+}
+
+.mobile-menu nav {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.6rem);
+  width: min(82vw, 280px);
+  display: grid;
+  gap: 0;
+  padding: 0.45rem;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+}
+
+.mobile-menu nav a {
+  padding: 0.72rem 0.8rem;
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 800;
+  border-radius: 6px;
+}
+
+.mobile-menu nav a:hover,
+.mobile-menu nav a:focus {
+  background: var(--surface-2);
+  color: var(--soil-dark);
+}
+
 /* Hero */
 
 .hero {
@@ -1412,6 +1481,10 @@ a:focus {
 
   .site-nav {
     display: none;
+  }
+
+  .mobile-menu {
+    display: block;
   }
 
   .hero {
