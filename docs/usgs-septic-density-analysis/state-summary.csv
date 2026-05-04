@@ -1,0 +1,50 @@
+state_fips,state_abbr,state_name,block_groups,area_sqkm,hs_septic_count,ms_septic_count,ls_septic_count,rank_ms_count,ms_density_per_sqkm_statewide,rank_ms_density,ms_median_bg_density,ms_median_positive_bg_density,positive_ms_bg_pct,high_density_ms_bg_pct,med_predicted_septic_bg_pct,missing_parcel_bg_pct,homeowner_signal
+01,AL,Alabama,3924,133896.844,1068670,1161532,1249614,10,8.675,20,2.417,15.967,52.78,18.65,52.8,0.05,High modern or localized signal
+04,AZ,Arizona,4773,295233.134,332749,380733,448286,32,1.29,41,0.0,10.817,14.69,5.15,16.55,3.0,"Lower statewide signal, still property-specific"
+05,AR,Arkansas,2294,137782.043,664493,713167,755509,23,5.176,28,1.859,9.381,56.76,16.78,56.76,0.04,High modern or localized signal
+06,CA,California,25585,409841.342,974826,1110288,1269631,11,2.709,35,0.0,13.513,9.33,3.23,9.36,0.05,"Lower statewide signal, still property-specific"
+08,CO,Colorado,4058,269599.646,427206,474556,514879,28,1.76,38,0.0,10.116,20.68,6.51,21.19,1.13,"Lower statewide signal, still property-specific"
+09,CT,Connecticut,2712,12924.51,211743,281524,358273,37,21.782,1,0.0,36.809,23.16,16.67,23.23,0.04,High modern or localized signal
+10,DE,Delaware,703,5207.201,77060,95428,112794,47,18.326,4,0.0,29.759,23.19,13.37,23.19,0.14,High modern or localized signal
+11,DC,District of Columbia,571,176.936,0,0,0,49,0.0,49,0.0,0.0,0.0,0.0,0.0,0.0,"Lower statewide signal, still property-specific"
+12,FL,Florida,13350,150931.102,966814,1173660,1416337,9,7.776,22,0.0,21.933,14.43,6.73,14.49,0.31,High modern or localized signal
+13,GA,Georgia,7441,152570.708,1223155,1370984,1536073,6,8.986,18,0.0,18.557,34.54,13.88,34.58,0.34,High modern or localized signal
+16,ID,Idaho,1284,216441.99,276478,294190,305999,36,1.359,40,0.0,6.835,39.72,8.96,39.88,0.7,Moderate property-specific signal
+17,IL,Illinois,9896,145915.81,915099,1019093,1135482,15,6.984,24,0.0,11.01,19.45,6.43,19.45,0.04,"Lower statewide signal, still property-specific"
+18,IN,Indiana,5287,93724.282,927968,1008263,1097635,16,10.758,13,0.0,14.165,34.95,10.93,34.95,0.0,High modern or localized signal
+19,IA,Iowa,2703,145744.528,672245,725850,771564,22,4.98,29,0.0,6.861,48.91,14.8,48.91,0.0,High modern or localized signal
+20,KS,Kansas,2461,213095.814,463736,487546,515213,27,2.288,36,0.0,7.72,35.11,8.7,35.11,0.0,Moderate property-specific signal
+21,KY,Kentucky,3581,104652.433,920027,970734,1021766,17,9.276,17,1.405,11.695,50.43,11.64,51.24,1.51,High modern or localized signal
+22,LA,Louisiana,4285,122014.714,608161,670131,746214,24,5.492,27,0.0,14.44,37.2,13.21,37.78,1.66,Moderate property-specific signal
+23,ME,Maine,1178,84896.426,339838,356848,373297,33,4.203,31,4.713,15.967,57.98,17.15,67.49,11.97,High modern or localized signal
+24,MD,Maryland,4069,26645.553,362111,420221,472866,30,15.771,5,0.0,28.143,18.78,10.27,18.85,0.27,High modern or localized signal
+25,MA,Massachusetts,5112,21221.436,295825,401601,530609,31,18.924,3,0.0,40.94,14.18,10.45,14.3,0.14,High modern or localized signal
+26,MI,Michigan,8344,150938.793,1299317,1409157,1520769,5,9.336,16,0.0,17.19,30.54,10.91,30.82,0.64,High modern or localized signal
+27,MN,Minnesota,4703,218562.517,833765,886388,950116,19,4.056,32,0.0,8.703,33.91,9.82,33.91,0.04,Moderate property-specific signal
+28,MS,Mississippi,2443,123479.863,712642,772288,836277,20,6.254,25,3.407,9.509,58.98,15.31,59.03,0.12,High modern or localized signal
+29,MO,Missouri,5031,180545.101,952918,1033568,1108757,14,5.725,26,0.0,10.252,37.19,11.53,37.19,0.0,Moderate property-specific signal
+30,MT,Montana,900,380839.266,269413,280418,291479,39,0.736,46,0.131,3.153,51.22,11.44,51.22,0.11,High modern or localized signal
+31,NE,Nebraska,1648,200334.456,342843,353516,367205,34,1.765,37,0.0,4.396,35.44,7.58,35.44,0.0,Moderate property-specific signal
+32,NV,Nevada,1963,286373.075,109545,123250,145243,46,0.43,48,0.0,7.625,11.61,3.87,11.82,0.2,"Lower statewide signal, still property-specific"
+33,NH,New Hampshire,996,24038.06,249084,280747,314479,38,11.679,10,2.584,21.384,51.51,23.09,51.61,0.2,Very high modern density signal
+34,NJ,New Jersey,6593,20132.842,244047,301644,377684,35,14.983,6,0.0,31.674,8.9,5.64,9.09,0.23,High modern or localized signal
+35,NM,New Mexico,1614,314920.386,236332,264613,300248,40,0.84,45,0.0,7.178,32.96,10.16,35.69,5.08,Moderate property-specific signal
+36,NY,New York,16009,126983.672,1205179,1300573,1405508,7,10.242,15,0.0,15.141,16.87,5.32,17.57,0.33,High modern or localized signal
+37,NC,North Carolina,7092,128595.252,1685409,1919660,2141155,2,14.928,7,0.0,25.506,45.09,22.97,45.32,0.78,Very high modern density signal
+38,ND,North Dakota,632,183108.562,173624,178806,185080,44,0.977,43,0.0,1.228,47.94,5.22,47.94,0.32,High modern or localized signal
+39,OH,Ohio,9467,106859.558,1331229,1470026,1625988,4,13.757,8,0.0,20.12,27.37,11.49,27.38,0.01,High modern or localized signal
+40,OK,Oklahoma,3374,181036.988,728384,771393,819102,21,4.261,30,0.0,12.223,40.31,12.36,40.31,0.0,Moderate property-specific signal
+41,OR,Oregon,2963,251336.383,398758,421809,467174,29,1.678,39,0.0,10.061,27.24,7.09,27.27,0.0,Moderate property-specific signal
+42,PA,Pennsylvania,10172,117340.181,1391046,1543260,1695562,3,13.152,9,0.0,21.706,27.95,12.56,27.98,0.11,High modern or localized signal
+44,RI,Rhode Island,791,2844.99,40221,55386,74545,48,19.468,2,0.0,38.149,11.5,8.72,12.14,0.88,High modern or localized signal
+45,SC,South Carolina,3407,80584.174,793989,904483,1009987,18,11.224,12,0.0,18.112,46.7,18.84,46.99,0.79,High modern or localized signal
+46,SD,South Dakota,694,199728.445,221650,227828,233388,41,1.141,42,0.353,3.012,54.03,8.5,55.76,2.02,High modern or localized signal
+47,TN,Tennessee,4562,109112.434,1131108,1243491,1370660,8,11.396,11,0.0,18.272,42.79,16.57,42.83,0.31,High modern or localized signal
+48,TX,Texas,18627,687707.405,2312469,2563936,2867821,1,3.728,34,0.0,15.142,21.81,8.18,21.83,0.04,High modern or localized signal
+49,UT,Utah,2020,219889.293,174909,198702,221769,43,0.904,44,0.0,8.008,17.18,4.75,17.38,1.39,"Lower statewide signal, still property-specific"
+50,VT,Vermont,552,24902.884,196016,203162,209151,42,8.158,21,6.591,10.012,70.83,12.14,70.83,0.91,High modern or localized signal
+51,VA,Virginia,5955,104841.399,1010505,1078392,1148048,13,10.286,14,0.0,14.867,30.5,9.44,30.76,0.92,High modern or localized signal
+53,WA,Washington,5307,175434.107,581658,659151,739243,25,3.757,33,0.0,20.731,22.03,10.14,22.23,0.43,"Lower statewide signal, still property-specific"
+54,WV,West Virginia,1639,62755.532,530610,557298,595959,26,8.88,19,5.642,13.415,61.62,18.3,61.62,0.0,High modern or localized signal
+55,WI,Wisconsin,4678,145342.611,1021072,1098433,1177611,12,7.558,23,0.0,11.539,38.39,11.29,38.41,0.13,Moderate property-specific signal
+56,WY,Wyoming,457,253324.959,127089,133212,138681,45,0.526,47,0.0,2.808,48.8,10.5,49.02,1.75,High modern or localized signal

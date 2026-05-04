@@ -2,61 +2,77 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Septic System Usage by State | Homeowner Risk Map Before Digging</title>
+  <title>Septic System Usage by State | Historical Reliance and Modern Density Signals</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta
     name="description"
-    content="Use this homeowner septic risk map to understand where septic systems have historically been common and when septic locating may matter before digging, fencing, landscaping, or driveway work."
+    content="Use historical Census data, EPA context, and USGS modeled septic-density signals to understand when septic records or private locating may matter before digging, fencing, landscaping, or yard work."
   />
   <meta name="robots" content="index,follow" />
   <link rel="canonical" href="https://findyoursepticbefore.com/septic-system-usage-by-state/" />
   <link rel="stylesheet" href="/assets/styles.css" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <style>
-    .data-hero-panel {
-      background: linear-gradient(180deg, rgba(255, 253, 249, 0.96), rgba(241, 235, 225, 0.92));
+    .signal-panel {
+      background: linear-gradient(135deg, #fffdf9 0%, #f1ebe1 100%);
       border: 1px solid rgba(214, 203, 187, 0.95);
-      border-radius: var(--radius-xl);
-      padding: 1.35rem;
-      box-shadow: var(--shadow-md);
-    }
-
-    .signal-list {
-      display: grid;
-      gap: 0.85rem;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .signal-list li {
-      padding: 0.9rem 1rem;
-      background: var(--surface);
-      border: 1px solid rgba(214, 203, 187, 0.9);
-      border-left: 5px solid var(--grass);
-      border-radius: 0 var(--radius-md) var(--radius-md) 0;
-      color: var(--text-soft);
-      font-size: 0.95rem;
-    }
-
-    .usage-tool {
-      display: grid;
-      gap: 1.25rem;
-      background: var(--surface);
-      border: 1px solid rgba(214, 203, 187, 0.95);
-      border-radius: var(--radius-xl);
+      border-left: 6px solid var(--grass);
+      border-radius: 0 var(--radius-xl) var(--radius-xl) 0;
       padding: 1.35rem;
       box-shadow: var(--shadow-sm);
     }
 
-    .usage-tool label {
-      display: block;
-      margin-bottom: 0.55rem;
-      color: var(--heading);
+    .signal-panel h2,
+    .signal-panel h3 {
+      margin-top: 0;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-top: 1.2rem;
+    }
+
+    .info-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0.4rem 0.75rem;
+      border: 1px solid rgba(214, 203, 187, 0.95);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--text-soft);
+      font-size: 0.85rem;
       font-weight: 800;
     }
 
-    .usage-tool select {
+    .state-tool {
+      display: grid;
+      grid-template-columns: minmax(240px, 0.72fr) minmax(0, 1.28fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .state-select-card,
+    .result-card,
+    .rank-card,
+    .attribution-box {
+      background: var(--surface);
+      border: 1px solid rgba(214, 203, 187, 0.95);
+      border-radius: var(--radius-xl);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .state-select-card label {
+      display: block;
+      margin-bottom: 0.55rem;
+      color: var(--heading);
+      font-weight: 850;
+    }
+
+    .state-select-card select {
       width: 100%;
       min-height: 52px;
       padding: 0.8rem 0.9rem;
@@ -68,150 +84,79 @@
       cursor: pointer;
     }
 
-    .usage-tool select:focus {
+    .state-select-card select:focus {
       border-color: var(--grass);
       outline: 3px solid rgba(79, 115, 55, 0.14);
       outline-offset: 0;
     }
 
-    .helper-note {
-      margin: 0.55rem 0 0;
-      color: var(--text-faint);
-      font-size: 0.94rem;
-    }
-
     .result-card {
       display: none;
-      background: linear-gradient(180deg, #fffdf9 0%, #fbf8f2 100%);
-      border: 1px solid rgba(214, 203, 187, 0.95);
-      border-radius: var(--radius-lg);
-      padding: 1.25rem;
-      animation: fadeUp 0.28s ease;
+      gap: 0.85rem;
     }
 
-    .result-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 1rem;
+    .result-card.is-visible {
+      display: grid;
+      animation: fadeUp 0.25s ease;
     }
 
-    .result-header h2 {
+    .result-card h3 {
       margin: 0;
       font-family: var(--font-display);
-      font-size: clamp(1.7rem, 3vw, 2.35rem);
-      line-height: 1.12;
+      font-size: clamp(1.8rem, 3vw, 2.35rem);
+      line-height: 1.1;
     }
 
-    .confidence-pill {
-      flex: 0 0 auto;
-      max-width: 270px;
-      padding: 0.5rem 0.7rem;
-      border-radius: 999px;
-      background: rgba(126, 170, 87, 0.14);
-      color: var(--grass-dark);
-      font-size: 0.78rem;
-      font-weight: 800;
-      text-align: center;
-    }
-
-    .stat-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem;
-    }
-
-    .stat-box {
-      padding: 1rem;
-      background: var(--surface);
-      border: 1px solid rgba(214, 203, 187, 0.9);
+    .result-row {
+      padding: 0.9rem;
       border-radius: var(--radius-md);
-    }
-
-    .stat-label {
-      margin-bottom: 0.4rem;
-      color: var(--text-faint);
-      font-size: 0.76rem;
-      font-weight: 800;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .stat-value {
-      color: var(--heading);
-      font-size: 1.24rem;
-      font-weight: 850;
-      line-height: 1.25;
-    }
-
-    .risk-high {
-      color: var(--clay);
-    }
-
-    .risk-med {
-      color: var(--warning);
-    }
-
-    .risk-low {
-      color: var(--success);
-    }
-
-    .explain-block,
-    .next-step {
-      margin-top: 1rem;
-      padding: 1rem;
-      border-radius: var(--radius-md);
-    }
-
-    .explain-block {
       background: var(--surface-2);
-      border: 1px solid var(--line);
     }
 
-    .next-step {
-      background: rgba(217, 125, 74, 0.12);
-      border: 1px solid rgba(179, 92, 47, 0.2);
+    .result-row strong {
+      display: block;
+      color: var(--heading);
+      line-height: 1.35;
     }
 
-    .explain-block p,
-    .next-step p {
-      margin: 0.35rem 0 0;
+    .rank-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .rank-card {
+      border-radius: var(--radius-lg);
+    }
+
+    .rank-card ol {
+      margin: 0;
+      padding-left: 1.35rem;
+    }
+
+    .rank-card li {
+      margin: 0.2rem 0;
       color: var(--text-soft);
     }
 
-    .table-wrap {
-      overflow-x: auto;
+    .subtle-link-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .subtle-link-grid p {
+      margin: 0;
+      padding: 1rem;
       background: var(--surface);
       border: 1px solid rgba(214, 203, 187, 0.95);
       border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-sm);
+      color: var(--text-soft);
     }
 
-    .data-table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 680px;
-    }
-
-    .data-table th,
-    .data-table td {
-      padding: 0.85rem 0.95rem;
-      border-bottom: 1px solid var(--line);
-      text-align: left;
-      vertical-align: top;
-    }
-
-    .data-table th {
-      background: var(--surface-2);
-      color: var(--heading);
-      font-size: 0.82rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .data-table tr:last-child td {
-      border-bottom: 0;
+    .method-note {
+      color: var(--text-faint);
+      font-size: 0.92rem;
     }
 
     @keyframes fadeUp {
@@ -225,20 +170,11 @@
       }
     }
 
-    @media (max-width: 760px) {
-      .result-header,
-      .stat-grid {
+    @media (max-width: 860px) {
+      .state-tool,
+      .rank-grid,
+      .subtle-link-grid {
         grid-template-columns: 1fr;
-      }
-
-      .result-header {
-        display: grid;
-      }
-
-      .confidence-pill {
-        max-width: none;
-        border-radius: var(--radius-md);
-        text-align: left;
       }
     }
   </style>
@@ -258,7 +194,7 @@
           <li><a href="/">Home</a></li>
           <li><a href="/septic-records-by-state/">Records Search</a></li>
           <li><a href="/before-you-dig/">Before You Dig</a></li>
-          <li><a href="/#faq">FAQ</a></li>
+          <li><a href="/does-811-mark-septic-tanks/">811 Limits</a></li>
         </ul>
       </nav>
 
@@ -268,7 +204,7 @@
           <a href="/">Home</a>
           <a href="/septic-records-by-state/">Records Search</a>
           <a href="/before-you-dig/">Before You Dig</a>
-          <a href="/#faq">FAQ</a>
+          <a href="/does-811-mark-septic-tanks/">811 Limits</a>
         </nav>
       </details>
     </div>
@@ -278,33 +214,31 @@
     <section class="hero hero-inner">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow">Homeowner pre-digging awareness tool</p>
-          <h1>Septic system usage by state: homeowner risk map before digging</h1>
+          <p class="eyebrow">Homeowner septic risk map</p>
+          <h1>Septic System Usage by State: Historical Reliance and Modern Density Signals</h1>
           <p class="hero-lead">
-            Septic systems are common in many rural and suburban areas, but current state-by-state data is imperfect. This guide combines historical Census sewage-disposal baselines, EPA national septic context, and newer USGS septic-density modeling so homeowners can understand when septic locating may matter before fencing, landscaping, trenching, or driveway work.
+            Septic systems are not only a rural concern. Rural properties are easier to recognize, but septic risk can be easier to overlook in older suburbs, coastal communities, lake neighborhoods, large-lot subdivisions, and streets near the edge of municipal sewer service. This guide combines historical Census sewage-disposal data, EPA national context, and a homeowner-friendly interpretation of USGS modeled septic-density data to help you know when to check records or locate private septic components before digging.
           </p>
 
           <div class="hero-actions">
-            <a class="button button-primary" href="#state-tool">Check Your State</a>
-            <a class="button button-secondary" href="tel:877-735-2796">Call 877-735-2796</a>
+            <a class="button button-primary" href="#state-check">Check your state</a>
+            <a class="button button-secondary" href="/does-811-mark-septic-tanks/">What 811 does not mark</a>
           </div>
 
-          <ul class="hero-points" aria-label="Data caveat summary">
-            <li>Historical state baseline from Census sewage-disposal tables</li>
-            <li>Modern national context from EPA and housing survey data</li>
-            <li>Modern spatial risk signal from USGS septic-density modeling</li>
-            <li>Property-level confirmation still requires local records or locating</li>
-          </ul>
+          <div class="pill-row" aria-label="Page data layers">
+            <span class="info-pill">Historical Census baseline</span>
+            <span class="info-pill">Modern USGS density signal</span>
+            <span class="info-pill">Urban/suburban caution</span>
+            <span class="info-pill">Before-digging next steps</span>
+          </div>
         </div>
 
-        <aside class="data-hero-panel" aria-label="Short answer">
+        <aside class="signal-panel">
           <p class="section-eyebrow">Short Answer</p>
-          <h2>Which states have historically had the highest septic reliance?</h2>
-          <ul class="signal-list">
-            <li><strong>Very high historical signal:</strong> Vermont, Maine, New Hampshire, and North Carolina.</li>
-            <li><strong>High southern and Appalachian signal:</strong> Alabama, West Virginia, South Carolina, Kentucky, Tennessee, and Mississippi.</li>
-            <li><strong>Modern caution:</strong> newer datasets are better at showing geographic density than exact current state percentages.</li>
-          </ul>
+          <h2>Do not judge by neighborhood appearance.</h2>
+          <p>
+            If you live in a clearly rural area, septic should already be on your checklist. The bigger blind spot is the developed-looking property where the owner assumes sewer because the neighborhood has sidewalks, nearby utilities, or a city mailing address. A sewer line nearby does not prove your house is connected. Before digging, confirm the property itself.
+          </p>
         </aside>
       </div>
     </section>
@@ -312,265 +246,304 @@
     <section class="summary-strip">
       <div class="container summary-grid">
         <div class="summary-item">
-          <h2>What this page is</h2>
-          <p>A practical, data-informed guide for deciding when septic uncertainty deserves attention before yard work.</p>
+          <h2>Historical signal</h2>
+          <p>Where septic systems were officially common in historical Census sewage-disposal data.</p>
         </div>
         <div class="summary-item">
-          <h2>What it is not</h2>
-          <p>It is not an official determination that a specific property has septic, sewer, or a mapped system layout.</p>
+          <h2>Modern signal</h2>
+          <p>Where USGS modeled septic-density data suggests present-day septic concentration.</p>
         </div>
         <div class="summary-item">
-          <h2>Best next step</h2>
-          <p>Check local records, call 811 before digging, and use septic-specific locating when private components are unclear.</p>
+          <h2>Practical action</h2>
+          <p>What homeowners should check before posts, trenches, landscaping, pools, sheds, or additions.</p>
         </div>
       </div>
     </section>
 
-    <section class="section" id="state-tool">
+    <section class="section" id="state-check">
       <div class="container">
         <div class="section-heading">
           <p class="section-eyebrow">State Lookup</p>
-          <h2>Choose a state to see the septic presence signal.</h2>
+          <h2>Choose a state for a homeowner-facing septic signal.</h2>
           <p class="section-lead">
-            This selector uses careful risk language instead of pretending there is a perfect modern septic percentage for every state.
+            This tool does not claim exact current septic usage by state. It turns historical and modeled data into practical before-digging guidance.
           </p>
         </div>
 
-        <section class="usage-tool" aria-label="Septic risk lookup tool">
-          <div>
+        <div class="state-tool">
+          <div class="state-select-card">
             <label for="stateSelect">Step 1: Select your state</label>
             <select id="stateSelect">
               <option value="">-- Select a State --</option>
-              <option value="VT">Vermont</option>
-              <option value="ME">Maine</option>
-              <option value="NH">New Hampshire</option>
-              <option value="MA">Massachusetts</option>
-              <option value="FL">Florida</option>
-              <option value="NC">North Carolina</option>
-              <option value="TX">Texas</option>
-              <option value="CA">California</option>
               <option value="AL">Alabama</option>
-              <option value="MS">Mississippi</option>
+              <option value="AZ">Arizona</option>
+              <option value="AR">Arkansas</option>
+              <option value="CA">California</option>
+              <option value="CO">Colorado</option>
+              <option value="CT">Connecticut</option>
+              <option value="DE">Delaware</option>
+              <option value="DC">District of Columbia</option>
+              <option value="FL">Florida</option>
               <option value="GA">Georgia</option>
+              <option value="ID">Idaho</option>
+              <option value="IL">Illinois</option>
+              <option value="IN">Indiana</option>
+              <option value="IA">Iowa</option>
+              <option value="KS">Kansas</option>
               <option value="KY">Kentucky</option>
-              <option value="TN">Tennessee</option>
+              <option value="LA">Louisiana</option>
+              <option value="ME">Maine</option>
+              <option value="MD">Maryland</option>
+              <option value="MA">Massachusetts</option>
+              <option value="MI">Michigan</option>
+              <option value="MN">Minnesota</option>
+              <option value="MS">Mississippi</option>
+              <option value="MO">Missouri</option>
+              <option value="MT">Montana</option>
+              <option value="NE">Nebraska</option>
+              <option value="NV">Nevada</option>
+              <option value="NH">New Hampshire</option>
+              <option value="NJ">New Jersey</option>
               <option value="NM">New Mexico</option>
+              <option value="NY">New York</option>
+              <option value="NC">North Carolina</option>
+              <option value="ND">North Dakota</option>
+              <option value="OH">Ohio</option>
+              <option value="OK">Oklahoma</option>
+              <option value="OR">Oregon</option>
+              <option value="PA">Pennsylvania</option>
+              <option value="RI">Rhode Island</option>
+              <option value="SC">South Carolina</option>
+              <option value="SD">South Dakota</option>
+              <option value="TN">Tennessee</option>
+              <option value="TX">Texas</option>
+              <option value="UT">Utah</option>
+              <option value="VT">Vermont</option>
+              <option value="VA">Virginia</option>
+              <option value="WA">Washington</option>
+              <option value="WV">West Virginia</option>
+              <option value="WI">Wisconsin</option>
+              <option value="WY">Wyoming</option>
+              <option value="AK">Alaska</option>
+              <option value="HI">Hawaii</option>
               <option value="OTHER">Other / National Context</option>
             </select>
-            <p class="helper-note">This is a planning guide, not an official property record search. Local health department files, permits, inspection records, and professional locating may still be needed.</p>
+            <p class="method-note">
+              Data-informed planning signal only. Local health department files, sewer billing, permit records, 811, and septic-specific locating may still be needed.
+            </p>
           </div>
 
           <article id="resultCard" class="result-card" aria-live="polite">
-            <div class="result-header">
-              <h2 id="resStateName">State Name</h2>
-              <div id="resConfidence" class="confidence-pill">Data confidence</div>
+            <h3 id="resStateName">State</h3>
+            <div class="result-row">
+              <strong>Modern USGS signal</strong>
+              <span id="resModernSignal">--</span>
             </div>
-
-            <div class="stat-grid">
-              <div class="stat-box">
-                <div class="stat-label">Septic Presence Signal</div>
-                <div id="resUsage" class="stat-value">--</div>
-              </div>
-              <div class="stat-box">
-                <div class="stat-label">Pre-Digging Risk</div>
-                <div id="resRisk" class="stat-value">--</div>
-              </div>
+            <div class="result-row">
+              <strong>Modeled exposure</strong>
+              <span id="resExposure">--</span>
             </div>
-
-            <div class="explain-block">
-              <strong>Why this can matter before digging:</strong>
-              <p id="resFactors"></p>
+            <div class="result-row">
+              <strong>Block group signal</strong>
+              <span id="resBlockGroupSignal">--</span>
             </div>
-
-            <div class="next-step">
-              <strong>Practical next step:</strong>
-              <p id="resNextStep"></p>
+            <div class="result-row">
+              <strong>Urban/suburban caution</strong>
+              <span id="resUrbanCaution">--</span>
             </div>
-
-            <div class="hero-actions" style="margin-top: 1rem;">
-              <a class="button button-primary" id="phoneCta" href="tel:877-735-2796">Need help finding septic components? Call 877-735-2796</a>
-              <a class="button button-secondary" href="/before-you-dig/">Read the before-digging guide</a>
+            <div class="result-row">
+              <strong>Data confidence</strong>
+              <span id="resConfidence">--</span>
+            </div>
+            <div class="result-row">
+              <strong>Best next step</strong>
+              <span id="resNextStep">--</span>
+            </div>
+            <div class="hero-actions">
+              <a class="button button-primary" href="tel:877-735-2796">Call 877-735-2796</a>
+              <a class="button button-secondary" href="/septic-records-by-state/">Search state records</a>
             </div>
           </article>
-        </section>
-      </div>
-    </section>
-
-    <section class="section section-tinted" id="historical-leaders">
-      <div class="container">
-        <div class="section-heading">
-          <p class="section-eyebrow">Historical Baseline</p>
-          <h2>Top historical septic-reliance states from Census 1990.</h2>
-          <p class="section-lead">
-            The 1990 Census sewage-disposal table is still useful because it provides a clean official state-by-state baseline. It should be read as a historical signal, not an exact current count.
-          </p>
-        </div>
-
-        <div class="table-wrap">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Rank</th>
-                <th>State</th>
-                <th>1990 septic / cesspool share</th>
-                <th>Homeowner interpretation</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Vermont</td>
-                <td>55.0%</td>
-                <td>Very strong historical signal, especially outside sewered town centers; property owners often need town records, permit history, or <a href="https://vermontsepticconnect.com" target="_blank" rel="noopener">Vermont-specific septic guidance</a> before yard work.</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Maine</td>
-                <td>51.3%</td>
-                <td>Very strong rural and older-property septic signal, where <a href="https://mainesepticconnect.com" target="_blank" rel="noopener">Maine septic service context</a> may be more useful than a national average.</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>New Hampshire</td>
-                <td>49.0%</td>
-                <td>Strong rural and suburban septic signal; <a href="https://newhampshiresepticconnect.com" target="_blank" rel="noopener">New Hampshire septic records and service paths</a> can vary by town and property history.</td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>North Carolina</td>
-                <td>48.5%</td>
-                <td>High historical reliance across rural and fast-growing suburban areas.</td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td>Alabama</td>
-                <td>43.6%</td>
-                <td>High historical reliance, with soil and record uncertainty relevant before digging; local <a href="https://alabamasepticconnect.com" target="_blank" rel="noopener">Alabama septic records context</a> can matter more than a statewide signal.</td>
-              </tr>
-              <tr>
-                <td>6</td>
-                <td>West Virginia</td>
-                <td>40.8%</td>
-                <td>High historical signal in mountainous and rural areas.</td>
-              </tr>
-              <tr>
-                <td>7</td>
-                <td>South Carolina</td>
-                <td>40.6%</td>
-                <td>High historical signal outside sewered municipalities and dense coastal cores.</td>
-              </tr>
-              <tr>
-                <td>8</td>
-                <td>Kentucky</td>
-                <td>39.8%</td>
-                <td>High rural and small-community septic signal, especially where <a href="https://kentuckysepticconnect.com" target="_blank" rel="noopener">Kentucky county septic records</a> and local health department files drive the next step.</td>
-              </tr>
-              <tr>
-                <td>9</td>
-                <td>Tennessee</td>
-                <td>38.6%</td>
-                <td>High signal in rural, hillside, and suburban-edge areas where <a href="https://tennesseesepticconnect.com" target="_blank" rel="noopener">Tennessee septic permit paths</a> often vary by county.</td>
-              </tr>
-              <tr>
-                <td>10</td>
-                <td>Mississippi</td>
-                <td>38.3%</td>
-                <td>High historical signal, especially where <a href="https://mississippisepticconnect.com" target="_blank" rel="noopener">Mississippi septic documentation</a> is local, old, or incomplete.</td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section section-tinted" id="urban-trap">
       <div class="container records-layout">
         <div class="records-copy">
           <div class="section-heading section-heading-left">
-            <p class="section-eyebrow">Why the Data Is Layered</p>
-            <h2>There is no clean modern national table for exact septic usage by state.</h2>
+            <p class="section-eyebrow">Urban/Suburban Septic Trap</p>
+            <h2>Why septic can still matter in developed-looking neighborhoods</h2>
             <p class="section-lead">
-              Septic systems are regulated locally, records are split across counties and health departments, and newer national work is often modeled geographically rather than published as a simple current state ranking.
+              Some properties remain on septic even after nearby sewer expansion. Some neighborhoods are partially connected. Some homes have city mailing addresses but county-level wastewater records.
             </p>
           </div>
 
           <p>
-            The safest way to use this information is as a risk signal. A state with a high historical septic share, rural development, private wells, older homes, or limited sewer coverage deserves more caution before a homeowner digs.
+            Older homes, private wells, lake communities, coastal areas, large-lot suburbs, and unincorporated pockets can all create septic uncertainty even when the area does not look rural.
           </p>
 
           <p>
-            Modern USGS septic-density modeling is useful because it estimates where residential septic tanks are likely to be concentrated at watershed, catchment, and Census block group scale. That is better for geography, but it still does not replace a local permit file or a property-specific locate.
-          </p>
-
-          <p>
-            Western states can be easy to underestimate from a simple state average. In places like New Mexico, septic concern is often tied to rural lots, private wells, unincorporated communities, and county-level files, so <a href="https://newmexicosepticconnect.com" target="_blank" rel="noopener">New Mexico septic help</a> belongs in the local-records step rather than in a national ranking shortcut.
+            The practical rule is simple: do not judge by neighborhood appearance. Verify the property before fence posts, landscaping, trenching, patios, pools, sheds, additions, grading, drainage work, or driveway changes.
           </p>
         </div>
 
         <aside class="records-panel">
-          <h3>Use the data in this order</h3>
-          <ol>
-            <li>Use Census 1990 as the official historical state baseline.</li>
-            <li>Use EPA and housing survey data for modern national context.</li>
-            <li>Use USGS density modeling as a modern spatial signal.</li>
-            <li>Use local records or locating for the actual property decision.</li>
-          </ol>
+          <h3>Urban/suburban checklist</h3>
+          <ul>
+            <li>Confirm whether the home has a municipal sewer account or wastewater bill.</li>
+            <li>Check disclosures, inspection reports, closing documents, and old permit files.</li>
+            <li>Search local health department or county septic records.</li>
+            <li>Call 811 before digging.</li>
+            <li>Do not assume 811 marks private septic tanks, lines, distribution boxes, or drain fields.</li>
+            <li>Use septic-specific locating if records are missing and the work area is near a likely septic path.</li>
+          </ul>
         </aside>
+      </div>
+    </section>
+
+    <section class="section" id="rankings">
+      <div class="container">
+        <div class="section-heading">
+          <p class="section-eyebrow">Modern USGS Findings</p>
+          <h2>Three ways to read septic risk.</h2>
+          <p class="section-lead">
+            A single statewide percentage can mislead. Total exposure, density, and local septic-supported patterns answer different homeowner questions.
+          </p>
+        </div>
+
+        <div class="rank-grid">
+          <article class="rank-card">
+            <h3>High total estimated exposure</h3>
+            <p>Large states can contain many modeled septic systems even when statewide density does not look extreme.</p>
+            <ol>
+              <li>Texas</li>
+              <li>North Carolina</li>
+              <li>Pennsylvania</li>
+              <li>Ohio</li>
+              <li>Michigan</li>
+              <li>Georgia</li>
+              <li>New York</li>
+              <li>Tennessee</li>
+              <li>Florida</li>
+              <li>Alabama</li>
+            </ol>
+          </article>
+
+          <article class="rank-card">
+            <h3>High statewide density signal</h3>
+            <p>This supports the urban/suburban blind spot because developed-looking states can still contain septic pockets.</p>
+            <ol>
+              <li>Connecticut</li>
+              <li>Rhode Island</li>
+              <li>Massachusetts</li>
+              <li>Delaware</li>
+              <li>Maryland</li>
+              <li>New Jersey</li>
+              <li>North Carolina</li>
+              <li>Ohio</li>
+              <li>Pennsylvania</li>
+              <li>New Hampshire</li>
+            </ol>
+          </article>
+
+          <article class="rank-card">
+            <h3>High septic-supported block group share</h3>
+            <p>This is the rural and historical signal: broad local patterns should make homeowners records-first.</p>
+            <ol>
+              <li>Vermont</li>
+              <li>Maine</li>
+              <li>West Virginia</li>
+              <li>Mississippi</li>
+              <li>Arkansas</li>
+              <li>South Dakota</li>
+              <li>Alabama</li>
+              <li>New Hampshire</li>
+              <li>Kentucky</li>
+              <li>Montana</li>
+            </ol>
+          </article>
+        </div>
       </div>
     </section>
 
     <section class="section section-tinted">
       <div class="container">
         <div class="section-heading">
-          <p class="section-eyebrow">Before-Digging Context</p>
-          <h2>When septic presence signals should change homeowner behavior.</h2>
+          <p class="section-eyebrow">What Homeowners Should Do</p>
+          <h2>Turn uncertainty into a safer next step.</h2>
           <p class="section-lead">
-            The point of this page is practical: if a septic system may be present, plan the work so tank access, septic lines, and drain field areas are not damaged or blocked.
+            The point of the data is not to prove that a specific address has septic. The point is to know when guessing is a bad plan.
           </p>
         </div>
 
         <div class="target-grid">
           <article class="target-card">
             <h3>Before fence installation</h3>
-            <p>Fence posts, gate posts, and property-line work can create risk when the tank, lid, or lines are unknown.</p>
+            <p>Posts and gate footings can hit lines or block future tank access when the layout is unknown.</p>
             <a href="/locate-septic-before-fence-installation/">Read the fence guide</a>
           </article>
-
           <article class="target-card">
             <h3>Before landscaping</h3>
-            <p>Tree planting, grading, hardscaping, drainage changes, and soil compaction can disturb private septic components.</p>
+            <p>Tree planting, grading, drainage work, and hardscape can disturb septic components that are not visible.</p>
             <a href="/find-septic-before-landscaping/">Read the landscaping guide</a>
           </article>
-
           <article class="target-card">
-            <h3>811 vs septic locating</h3>
-            <p>811 is the right first step for utility marking, but private septic components may need separate septic-specific locating.</p>
+            <h3>811 is not the whole answer</h3>
+            <p>811 is still the first call before digging, but private septic components may need separate locating.</p>
             <a href="/does-811-mark-septic-tanks/">Compare 811 and septic locating</a>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section section-tinted">
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="section-eyebrow">Local Context</p>
+          <h2>State signals still need local follow-up.</h2>
+          <p class="section-lead">
+            These state resources are included where they naturally support local records and service context. They do not replace property-specific verification.
+          </p>
+        </div>
+
+        <div class="subtle-link-grid">
+          <p>In New England, older homes, private wells, lake communities, and town-level records make local context important in <a href="https://vermontsepticconnect.com" target="_blank" rel="noopener">Vermont</a>, <a href="https://mainesepticconnect.com" target="_blank" rel="noopener">Maine</a>, and <a href="https://newhampshiresepticconnect.com" target="_blank" rel="noopener">New Hampshire</a>.</p>
+          <p>In the South and Appalachia, county-level records and rural/suburban growth patterns matter in <a href="https://alabamasepticconnect.com" target="_blank" rel="noopener">Alabama</a>, <a href="https://mississippisepticconnect.com" target="_blank" rel="noopener">Mississippi</a>, <a href="https://tennesseesepticconnect.com" target="_blank" rel="noopener">Tennessee</a>, and <a href="https://kentuckysepticconnect.com" target="_blank" rel="noopener">Kentucky</a>.</p>
+          <p>Western states can look low by statewide density while still having rural, private-well, and unincorporated septic pockets. That is the safer way to read <a href="https://newmexicosepticconnect.com" target="_blank" rel="noopener">New Mexico septic context</a>.</p>
+          <p>For any state, start with local records before digging: health department files, permit records, sewer billing, disclosures, and septic-specific locating when the layout is unclear.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tinted" id="attribution">
       <div class="container records-layout">
         <div class="records-copy">
           <div class="section-heading section-heading-left">
-            <p class="section-eyebrow">Sources and Limits</p>
-            <h2>Data sources checked and interpreted.</h2>
+            <p class="section-eyebrow">Data Attribution</p>
+            <h2>Credit and limitations</h2>
           </div>
 
-          <ul>
-            <li><a href="https://www.usgs.gov/data/estimated-densities-residential-septic-tanks-across-conterminous-united-states-huc12-nhdv2" target="_blank" rel="noopener">USGS: Estimated Densities of Residential Septic Tanks Across the Conterminous United States</a>.</li>
-            <li><a href="https://www.epa.gov/septic/about-septic-systems" target="_blank" rel="noopener">EPA: About Septic Systems</a> and national decentralized wastewater context.</li>
-            <li><a href="https://www2.census.gov/programs-surveys/decennial/tables/time-series/census-housing-tables/sewage.pdf" target="_blank" rel="noopener">U.S. Census historical sewage-disposal table</a> for state-by-state septic tank / cesspool baselines.</li>
-            <li><a href="https://www.circleofblue.org/2015/supply/water-management/infrastructure/infographic-americas-septic-systems/" target="_blank" rel="noopener">Circle of Blue: America's septic systems overview</a> for historical context and data-limit discussion.</li>
-          </ul>
+          <div class="attribution-box">
+            <p>
+              This page uses and interprets public data from the U.S. Geological Survey dataset <a href="https://doi.org/10.5066/P1WCYDPB" target="_blank" rel="noopener">Estimated Densities of Residential Septic Tanks across the Conterminous United States for 12-digit Hydrologic Unit Code 12 (HUC12), National Hydrography Dataset Plus Version 2 (NHDPlusV2) Catchment, and Block Group Scales</a>.
+            </p>
+            <p>
+              Dataset authors: Brennon K. Peterson, Stephanie E. Gordon, Brianna M. Williams, Rachel M. Atkins, Labeeb Ahmed, and Serena M. Seawolf. Publisher: U.S. Geological Survey.
+            </p>
+            <p>
+              FindYourSepticBefore.com interpreted the public dataset for homeowner education. This page is not an official USGS ranking, USGS endorsement, or property-level septic determination. Local records, sewer billing, health department files, 811, and professional locating may still be needed.
+            </p>
+            <p class="method-note">
+              This V2 interpretation uses the prepared state rollup from <code>docs/usgs-septic-density-analysis/state-summary.csv</code> and homeowner-facing labels from <code>docs/usgs-septic-density-analysis/v2-state-payload.json</code>. Historical context comes from Census sewage-disposal tables and EPA national septic context.
+            </p>
+          </div>
         </div>
 
         <aside class="records-panel">
-          <h3>Important disclaimer</h3>
+          <h3>Still not sure before digging?</h3>
           <p>
-            This page is an interpretive homeowner planning guide. It does not provide an official determination that a property has a septic system, does not replace 811 utility marking, and does not replace local health department, county, permit, inspection, or professional locating records. Historical state percentages should be read as baseline signals, not exact current household counts.
+            If records do not clearly show the tank, lines, distribution box, or drain field, septic-specific locating may be the practical next step before digging.
           </p>
           <a class="button button-primary" href="tel:877-735-2796">Call 877-735-2796</a>
         </aside>
@@ -601,7 +574,7 @@
 
       <div class="footer-links">
         <a href="/">Home</a>
-        <a href="/septic-system-usage-by-state/">Usage by State</a>
+        <a href="/septic-records-by-state/">Records Search</a>
         <a href="/before-you-dig/">Before You Dig</a>
       </div>
     </div>
@@ -620,174 +593,807 @@
   </footer>
 
   <script>
-    const SITE_PHONE_DISPLAY = "877-735-2796";
-    const SITE_PHONE_TEL = "877-735-2796";
     const stateData = {
-      "VT": {
-        name: "Vermont",
-        usage: "Very high historical reliance signal",
-        risk: "High",
-        riskClass: "risk-high",
-        confidence: "Historical baseline + strong rural-density signal",
-        factors: "Vermont has historically shown one of the strongest septic reliance signals in the country. In rural and older-home areas, homeowners should assume that septic components may be present unless local records clearly show sewer connection or a known system layout.",
-        nextStep: "Before digging, check town or health department records, look for any prior septic plan, call 811 for utility marking, and consider septic-specific locating if the tank, lid, line, or drain field location is unclear."
+      "AL": {
+        name: "Alabama",
+        modernSignal: "High total exposure signal",
+        exposure: "Modeled medium-estimate exposure rank #10 by count and #20 by statewide density.",
+        blockGroupSignal: "52.8% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "Alabama has enough modeled septic exposure that city edges, fast-growing suburbs, and older subdivisions should still be checked before digging.",
+        nextStep: "Treat septic location as a real planning issue before posts, trenches, grading, pools, sheds, additions, or landscaping. Check records, call 811, and locate private septic components when layout is unclear.",
+        metrics: {
+          countRank: 10,
+          densityRank: 20,
+          septicBlockGroupPct: 52.8,
+          parcelGapPct: 0.1
+        }
       },
-      "ME": {
-        name: "Maine",
-        usage: "Very high historical reliance signal",
-        risk: "High",
-        riskClass: "risk-high",
-        confidence: "Historical baseline + strong rural-density signal",
-        factors: "Maine combines older housing, rural development, rocky soils, and many properties outside municipal sewer coverage. That makes septic uncertainty especially relevant before landscaping, fencing, driveway work, additions, or drainage projects.",
-        nextStep: "Start with local records and any property transfer documents. If the system layout is missing or unclear, septic locating can help identify likely tank and line areas before ground disturbance."
+      "AZ": {
+        name: "Arizona",
+        modernSignal: "Lower statewide signal, still property-specific",
+        exposure: "Modeled medium-estimate exposure rank #32 by count and #41 by statewide density.",
+        blockGroupSignal: "16.6% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Moderate confidence: some parcel-data gaps may affect local estimates.",
+        urbanCaution: "In Arizona, a lower statewide signal does not rule out septic on a specific property, especially outside confirmed municipal sewer service.",
+        nextStep: "Do not rely on the state average. Verify the property through sewer billing, local records, disclosures, 811, and septic-specific locating when the work area is uncertain.",
+        metrics: {
+          countRank: 32,
+          densityRank: 41,
+          septicBlockGroupPct: 16.6,
+          parcelGapPct: 3.0
+        }
       },
-      "NH": {
-        name: "New Hampshire",
-        usage: "Very high historical reliance signal",
-        risk: "High",
-        riskClass: "risk-high",
-        confidence: "Historical baseline + strong rural/suburban signal",
-        factors: "New Hampshire has a strong rural and suburban septic profile, especially outside sewered town centers. Older systems, rocky ground, wooded lots, and additions over time can make tank and line locations difficult for homeowners to identify from the surface.",
-        nextStep: "Check municipal, county, or state septic records where available. Call 811 before digging, then use septic-specific locating if private components are not clearly mapped."
-      },
-      "MA": {
-        name: "Massachusetts",
-        usage: "Moderate to high localized signal",
-        risk: "Moderate to High",
-        riskClass: "risk-high",
-        confidence: "Historical baseline + localized density signal",
-        factors: "Massachusetts has many sewered communities, but septic remains important in suburban, coastal, rural, and older-home areas. Cape Cod, lake communities, and properties outside dense municipal sewer coverage can carry higher septic uncertainty before yard work.",
-        nextStep: "Look for Title 5 records, local board of health files, and property documents. If layout records are incomplete, locating may be prudent before fencing, landscaping, drainage, or driveway work."
-      },
-      "FL": {
-        name: "Florida",
-        usage: "High total system count signal",
-        risk: "High",
-        riskClass: "risk-high",
-        confidence: "Modern public-data support + environmental-risk signal",
-        factors: "Florida has a large total number of septic systems, and some areas face high water tables, sandy soils, coastal flooding, or rapid suburban development. Statewide averages can hide very different local conditions from county to county.",
-        nextStep: "Check county records, permit history, and any site plan. Call 811 before digging, then consider septic-specific locating if the system position is uncertain or if work is near likely tank, line, or drain field areas."
-      },
-      "NC": {
-        name: "North Carolina",
-        usage: "Very high historical reliance signal",
-        risk: "High",
-        riskClass: "risk-high",
-        confidence: "Historical baseline + strong rural/suburban signal",
-        factors: "North Carolina has historically shown high septic reliance, with many rural and fast-growing suburban areas outside municipal sewer. Coastal, piedmont, and mountain conditions can create very different local septic layouts and digging concerns.",
-        nextStep: "Check county environmental health records and any septic permit or repair documents. If records are absent or unclear, use septic locating before ground work near possible tank, line, or drain field zones."
-      },
-      "TX": {
-        name: "Texas",
-        usage: "Moderate statewide / high localized signal",
-        risk: "Moderate",
-        riskClass: "risk-med",
-        confidence: "Modeled density signal + localized interpretation",
-        factors: "Texas has a lower statewide reliance signal than some rural eastern states, but its size means many systems exist in unincorporated, rural, exurban, lake, and hill-country areas. Local soil and county development patterns matter more than the statewide number.",
-        nextStep: "Check county records, subdivision documents, and any on-site sewage facility paperwork. Use 811 for utility marking and septic-specific locating when the system layout is not obvious."
+      "AR": {
+        name: "Arkansas",
+        modernSignal: "Strong rural or county-level signal",
+        exposure: "Modeled medium-estimate exposure rank #23 by count and #28 by statewide density.",
+        blockGroupSignal: "56.8% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "Arkansas has a strong rural or historical septic signal, but the same records-first logic also applies near town edges and partially sewered communities.",
+        nextStep: "Treat septic location as a real planning issue before posts, trenches, grading, pools, sheds, additions, or landscaping. Check records, call 811, and locate private septic components when layout is unclear.",
+        metrics: {
+          countRank: 23,
+          densityRank: 28,
+          septicBlockGroupPct: 56.8,
+          parcelGapPct: 0.0
+        }
       },
       "CA": {
         name: "California",
-        usage: "Lower statewide / high localized signal",
-        risk: "Moderate",
-        riskClass: "risk-med",
-        confidence: "Localized density signal + state variability",
-        factors: "California has many sewered urban areas, but septic systems remain important in foothill, rural, mountain, coastal, agricultural, and unincorporated areas. A low statewide signal does not eliminate septic risk on a specific property.",
-        nextStep: "Check county environmental health records and any property inspection documents. Before digging, call 811 and verify whether private septic components need separate locating."
+        modernSignal: "Lower statewide signal, still property-specific",
+        exposure: "Modeled medium-estimate exposure rank #11 by count and #35 by statewide density.",
+        blockGroupSignal: "9.4% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "In California, a lower statewide signal does not rule out septic on a specific property, especially outside confirmed municipal sewer service.",
+        nextStep: "Do not rely on the state average. Verify the property through sewer billing, local records, disclosures, 811, and septic-specific locating when the work area is uncertain.",
+        metrics: {
+          countRank: 11,
+          densityRank: 35,
+          septicBlockGroupPct: 9.4,
+          parcelGapPct: 0.1
+        }
       },
-      "AL": {
-        name: "Alabama",
-        usage: "High historical reliance signal",
-        risk: "High",
-        riskClass: "risk-high",
-        confidence: "Historical baseline + soil-condition relevance",
-        factors: "Alabama has historically shown high septic reliance. In some areas, clay-heavy soils, rural development, older homes, and incomplete records can make septic layouts harder for homeowners to understand before digging.",
-        nextStep: "Use local health department records and property documents first. If the septic layout is missing or old, consider locating before excavation, drainage work, fencing, or driveway projects."
+      "CO": {
+        name: "Colorado",
+        modernSignal: "Lower statewide signal, still property-specific",
+        exposure: "Modeled medium-estimate exposure rank #28 by count and #38 by statewide density.",
+        blockGroupSignal: "21.2% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "In Colorado, a lower statewide signal does not rule out septic on a specific property, especially outside confirmed municipal sewer service.",
+        nextStep: "Do not rely on the state average. Verify the property through sewer billing, local records, disclosures, 811, and septic-specific locating when the work area is uncertain.",
+        metrics: {
+          countRank: 28,
+          densityRank: 38,
+          septicBlockGroupPct: 21.2,
+          parcelGapPct: 1.1
+        }
       },
-      "MS": {
-        name: "Mississippi",
-        usage: "High historical reliance signal",
-        risk: "High",
-        riskClass: "risk-high",
-        confidence: "Historical baseline + soil-condition relevance",
-        factors: "Mississippi has historically shown a high septic reliance signal, especially in rural areas. Heavy soils, older installations, and incomplete system documentation can increase uncertainty before digging or site work.",
-        nextStep: "Check local records and any past permit documents. Call 811 for utilities and use septic-specific locating if the private septic layout is uncertain."
+      "CT": {
+        name: "Connecticut",
+        modernSignal: "Urban/suburban hidden-septic signal",
+        exposure: "Modeled medium-estimate exposure rank #37 by count and #1 by statewide density.",
+        blockGroupSignal: "23.2% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "Connecticut has developed-looking areas where septic can still be overlooked, especially older suburbs, coastal or lake communities, large-lot neighborhoods, and sewer-edge streets.",
+        nextStep: "Confirm the home has a municipal sewer account or connection record, then check local records before digging. Call 811, but do not assume 811 marks private septic components.",
+        metrics: {
+          countRank: 37,
+          densityRank: 1,
+          septicBlockGroupPct: 23.2,
+          parcelGapPct: 0.0
+        }
+      },
+      "DE": {
+        name: "Delaware",
+        modernSignal: "Urban/suburban hidden-septic signal",
+        exposure: "Modeled medium-estimate exposure rank #47 by count and #4 by statewide density.",
+        blockGroupSignal: "23.2% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "Delaware has developed-looking areas where septic can still be overlooked, especially older suburbs, coastal or lake communities, large-lot neighborhoods, and sewer-edge streets.",
+        nextStep: "Confirm the home has a municipal sewer account or connection record, then check local records before digging. Call 811, but do not assume 811 marks private septic components.",
+        metrics: {
+          countRank: 47,
+          densityRank: 4,
+          septicBlockGroupPct: 23.2,
+          parcelGapPct: 0.1
+        }
+      },
+      "DC": {
+        name: "District of Columbia",
+        modernSignal: "Lower statewide signal, still property-specific",
+        exposure: "Modeled medium-estimate exposure rank #49 by count and #49 by statewide density.",
+        blockGroupSignal: "0.0% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "In District of Columbia, a lower statewide signal does not rule out septic on a specific property, especially outside confirmed municipal sewer service.",
+        nextStep: "Do not rely on the state average. Verify the property through sewer billing, local records, disclosures, 811, and septic-specific locating when the work area is uncertain.",
+        metrics: {
+          countRank: 49,
+          densityRank: 49,
+          septicBlockGroupPct: 0.0,
+          parcelGapPct: 0.0
+        }
+      },
+      "FL": {
+        name: "Florida",
+        modernSignal: "High total exposure signal",
+        exposure: "Modeled medium-estimate exposure rank #9 by count and #22 by statewide density.",
+        blockGroupSignal: "14.5% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "Florida has enough modeled septic exposure that city edges, fast-growing suburbs, and older subdivisions should still be checked before digging.",
+        nextStep: "Treat septic location as a real planning issue before posts, trenches, grading, pools, sheds, additions, or landscaping. Check records, call 811, and locate private septic components when layout is unclear.",
+        metrics: {
+          countRank: 9,
+          densityRank: 22,
+          septicBlockGroupPct: 14.5,
+          parcelGapPct: 0.3
+        }
       },
       "GA": {
         name: "Georgia",
-        usage: "Moderate to high localized signal",
-        risk: "Moderate to High",
-        riskClass: "risk-high",
-        confidence: "Historical baseline + localized growth signal",
-        factors: "Georgia includes many sewered metro areas but also extensive rural and suburban septic use. Growth outside municipal sewer coverage can make septic location important before fences, patios, grading, drainage, or driveway changes.",
-        nextStep: "Review county records and property documents. If a system exists but the tank, line, or drain field location is unclear, locating is a safer step before digging."
+        modernSignal: "High total exposure signal",
+        exposure: "Modeled medium-estimate exposure rank #6 by count and #18 by statewide density.",
+        blockGroupSignal: "34.6% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "Georgia has enough modeled septic exposure that city edges, fast-growing suburbs, and older subdivisions should still be checked before digging.",
+        nextStep: "Treat septic location as a real planning issue before posts, trenches, grading, pools, sheds, additions, or landscaping. Check records, call 811, and locate private septic components when layout is unclear.",
+        metrics: {
+          countRank: 6,
+          densityRank: 18,
+          septicBlockGroupPct: 34.6,
+          parcelGapPct: 0.3
+        }
+      },
+      "ID": {
+        name: "Idaho",
+        modernSignal: "Moderate localized signal",
+        exposure: "Modeled medium-estimate exposure rank #36 by count and #40 by statewide density.",
+        blockGroupSignal: "39.9% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "In Idaho, a lower statewide signal does not rule out septic on a specific property, especially outside confirmed municipal sewer service.",
+        nextStep: "Do not rely on the state average. Verify the property through sewer billing, local records, disclosures, 811, and septic-specific locating when the work area is uncertain.",
+        metrics: {
+          countRank: 36,
+          densityRank: 40,
+          septicBlockGroupPct: 39.9,
+          parcelGapPct: 0.7
+        }
+      },
+      "IL": {
+        name: "Illinois",
+        modernSignal: "Lower statewide signal, still property-specific",
+        exposure: "Modeled medium-estimate exposure rank #15 by count and #24 by statewide density.",
+        blockGroupSignal: "19.4% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "In Illinois, a lower statewide signal does not rule out septic on a specific property, especially outside confirmed municipal sewer service.",
+        nextStep: "Do not rely on the state average. Verify the property through sewer billing, local records, disclosures, 811, and septic-specific locating when the work area is uncertain.",
+        metrics: {
+          countRank: 15,
+          densityRank: 24,
+          septicBlockGroupPct: 19.4,
+          parcelGapPct: 0.0
+        }
+      },
+      "IN": {
+        name: "Indiana",
+        modernSignal: "Moderate localized signal",
+        exposure: "Modeled medium-estimate exposure rank #16 by count and #13 by statewide density.",
+        blockGroupSignal: "35.0% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "In Indiana, a lower statewide signal does not rule out septic on a specific property, especially outside confirmed municipal sewer service.",
+        nextStep: "Do not rely on the state average. Verify the property through sewer billing, local records, disclosures, 811, and septic-specific locating when the work area is uncertain.",
+        metrics: {
+          countRank: 16,
+          densityRank: 13,
+          septicBlockGroupPct: 35.0,
+          parcelGapPct: 0.0
+        }
+      },
+      "IA": {
+        name: "Iowa",
+        modernSignal: "Strong rural or county-level signal",
+        exposure: "Modeled medium-estimate exposure rank #22 by count and #29 by statewide density.",
+        blockGroupSignal: "48.9% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "Iowa has a strong rural or historical septic signal, but the same records-first logic also applies near town edges and partially sewered communities.",
+        nextStep: "Treat septic location as a real planning issue before posts, trenches, grading, pools, sheds, additions, or landscaping. Check records, call 811, and locate private septic components when layout is unclear.",
+        metrics: {
+          countRank: 22,
+          densityRank: 29,
+          septicBlockGroupPct: 48.9,
+          parcelGapPct: 0.0
+        }
+      },
+      "KS": {
+        name: "Kansas",
+        modernSignal: "Moderate localized signal",
+        exposure: "Modeled medium-estimate exposure rank #27 by count and #36 by statewide density.",
+        blockGroupSignal: "35.1% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "In Kansas, a lower statewide signal does not rule out septic on a specific property, especially outside confirmed municipal sewer service.",
+        nextStep: "Do not rely on the state average. Verify the property through sewer billing, local records, disclosures, 811, and septic-specific locating when the work area is uncertain.",
+        metrics: {
+          countRank: 27,
+          densityRank: 36,
+          septicBlockGroupPct: 35.1,
+          parcelGapPct: 0.0
+        }
       },
       "KY": {
         name: "Kentucky",
-        usage: "High historical reliance signal",
-        risk: "High",
-        riskClass: "risk-high",
-        confidence: "Historical baseline + rural-density signal",
-        factors: "Kentucky has historically shown a high septic reliance signal, especially outside sewered city centers. Rural lots, older homes, slopes, and mixed soil conditions can make septic placement less obvious from the surface.",
-        nextStep: "Check county health department records and any prior septic inspection or permit documents. Call 811 before digging, then use septic locating if private components are not clearly mapped."
+        modernSignal: "Strong rural or county-level signal",
+        exposure: "Modeled medium-estimate exposure rank #17 by count and #17 by statewide density.",
+        blockGroupSignal: "51.2% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "Kentucky has a strong rural or historical septic signal, but the same records-first logic also applies near town edges and partially sewered communities.",
+        nextStep: "Treat septic location as a real planning issue before posts, trenches, grading, pools, sheds, additions, or landscaping. Check records, call 811, and locate private septic components when layout is unclear.",
+        metrics: {
+          countRank: 17,
+          densityRank: 17,
+          septicBlockGroupPct: 51.2,
+          parcelGapPct: 1.5
+        }
       },
-      "TN": {
-        name: "Tennessee",
-        usage: "High historical reliance signal",
-        risk: "Moderate to High",
-        riskClass: "risk-high",
-        confidence: "Historical baseline + rural/suburban signal",
-        factors: "Tennessee has historically shown high septic reliance in many rural and suburban areas. Hills, older homes, additions, and partial property records can complicate tank, line, and drain field location before digging.",
-        nextStep: "Check local environmental health records and any property transfer paperwork. If the system layout is uncertain, septic locating can reduce pre-digging guesswork."
+      "LA": {
+        name: "Louisiana",
+        modernSignal: "Moderate localized signal",
+        exposure: "Modeled medium-estimate exposure rank #24 by count and #27 by statewide density.",
+        blockGroupSignal: "37.8% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "In Louisiana, a lower statewide signal does not rule out septic on a specific property, especially outside confirmed municipal sewer service.",
+        nextStep: "Do not rely on the state average. Verify the property through sewer billing, local records, disclosures, 811, and septic-specific locating when the work area is uncertain.",
+        metrics: {
+          countRank: 24,
+          densityRank: 27,
+          septicBlockGroupPct: 37.8,
+          parcelGapPct: 1.7
+        }
+      },
+      "ME": {
+        name: "Maine",
+        modernSignal: "Strong rural or county-level signal",
+        exposure: "Modeled medium-estimate exposure rank #33 by count and #31 by statewide density.",
+        blockGroupSignal: "67.5% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Use extra caution: parcel-data gaps may undercount septic systems in parts of this state.",
+        urbanCaution: "Maine has a strong rural or historical septic signal, but the same records-first logic also applies near town edges and partially sewered communities.",
+        nextStep: "Start with local health department or county records because the modeled data may undercount some areas. Use septic-specific locating if records do not show the tank, lines, or field.",
+        metrics: {
+          countRank: 33,
+          densityRank: 31,
+          septicBlockGroupPct: 67.5,
+          parcelGapPct: 12.0
+        }
+      },
+      "MD": {
+        name: "Maryland",
+        modernSignal: "Urban/suburban hidden-septic signal",
+        exposure: "Modeled medium-estimate exposure rank #30 by count and #5 by statewide density.",
+        blockGroupSignal: "18.9% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "Maryland has developed-looking areas where septic can still be overlooked, especially older suburbs, coastal or lake communities, large-lot neighborhoods, and sewer-edge streets.",
+        nextStep: "Confirm the home has a municipal sewer account or connection record, then check local records before digging. Call 811, but do not assume 811 marks private septic components.",
+        metrics: {
+          countRank: 30,
+          densityRank: 5,
+          septicBlockGroupPct: 18.9,
+          parcelGapPct: 0.3
+        }
+      },
+      "MA": {
+        name: "Massachusetts",
+        modernSignal: "Urban/suburban hidden-septic signal",
+        exposure: "Modeled medium-estimate exposure rank #31 by count and #3 by statewide density.",
+        blockGroupSignal: "14.3% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "Massachusetts has developed-looking areas where septic can still be overlooked, especially older suburbs, coastal or lake communities, large-lot neighborhoods, and sewer-edge streets.",
+        nextStep: "Confirm the home has a municipal sewer account or connection record, then check local records before digging. Call 811, but do not assume 811 marks private septic components.",
+        metrics: {
+          countRank: 31,
+          densityRank: 3,
+          septicBlockGroupPct: 14.3,
+          parcelGapPct: 0.1
+        }
+      },
+      "MI": {
+        name: "Michigan",
+        modernSignal: "High total exposure signal",
+        exposure: "Modeled medium-estimate exposure rank #5 by count and #16 by statewide density.",
+        blockGroupSignal: "30.8% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "Michigan has enough modeled septic exposure that city edges, fast-growing suburbs, and older subdivisions should still be checked before digging.",
+        nextStep: "Treat septic location as a real planning issue before posts, trenches, grading, pools, sheds, additions, or landscaping. Check records, call 811, and locate private septic components when layout is unclear.",
+        metrics: {
+          countRank: 5,
+          densityRank: 16,
+          septicBlockGroupPct: 30.8,
+          parcelGapPct: 0.6
+        }
+      },
+      "MN": {
+        name: "Minnesota",
+        modernSignal: "Moderate localized signal",
+        exposure: "Modeled medium-estimate exposure rank #19 by count and #32 by statewide density.",
+        blockGroupSignal: "33.9% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "In Minnesota, a lower statewide signal does not rule out septic on a specific property, especially outside confirmed municipal sewer service.",
+        nextStep: "Do not rely on the state average. Verify the property through sewer billing, local records, disclosures, 811, and septic-specific locating when the work area is uncertain.",
+        metrics: {
+          countRank: 19,
+          densityRank: 32,
+          septicBlockGroupPct: 33.9,
+          parcelGapPct: 0.0
+        }
+      },
+      "MS": {
+        name: "Mississippi",
+        modernSignal: "Strong rural or county-level signal",
+        exposure: "Modeled medium-estimate exposure rank #20 by count and #25 by statewide density.",
+        blockGroupSignal: "59.0% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "Mississippi has a strong rural or historical septic signal, but the same records-first logic also applies near town edges and partially sewered communities.",
+        nextStep: "Treat septic location as a real planning issue before posts, trenches, grading, pools, sheds, additions, or landscaping. Check records, call 811, and locate private septic components when layout is unclear.",
+        metrics: {
+          countRank: 20,
+          densityRank: 25,
+          septicBlockGroupPct: 59.0,
+          parcelGapPct: 0.1
+        }
+      },
+      "MO": {
+        name: "Missouri",
+        modernSignal: "Moderate localized signal",
+        exposure: "Modeled medium-estimate exposure rank #14 by count and #26 by statewide density.",
+        blockGroupSignal: "37.2% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "In Missouri, a lower statewide signal does not rule out septic on a specific property, especially outside confirmed municipal sewer service.",
+        nextStep: "Do not rely on the state average. Verify the property through sewer billing, local records, disclosures, 811, and septic-specific locating when the work area is uncertain.",
+        metrics: {
+          countRank: 14,
+          densityRank: 26,
+          septicBlockGroupPct: 37.2,
+          parcelGapPct: 0.0
+        }
+      },
+      "MT": {
+        name: "Montana",
+        modernSignal: "Strong rural or county-level signal",
+        exposure: "Modeled medium-estimate exposure rank #39 by count and #46 by statewide density.",
+        blockGroupSignal: "51.2% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "Montana has a strong rural or historical septic signal, but the same records-first logic also applies near town edges and partially sewered communities.",
+        nextStep: "Treat septic location as a real planning issue before posts, trenches, grading, pools, sheds, additions, or landscaping. Check records, call 811, and locate private septic components when layout is unclear.",
+        metrics: {
+          countRank: 39,
+          densityRank: 46,
+          septicBlockGroupPct: 51.2,
+          parcelGapPct: 0.1
+        }
+      },
+      "NE": {
+        name: "Nebraska",
+        modernSignal: "Moderate localized signal",
+        exposure: "Modeled medium-estimate exposure rank #34 by count and #37 by statewide density.",
+        blockGroupSignal: "35.4% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "In Nebraska, a lower statewide signal does not rule out septic on a specific property, especially outside confirmed municipal sewer service.",
+        nextStep: "Do not rely on the state average. Verify the property through sewer billing, local records, disclosures, 811, and septic-specific locating when the work area is uncertain.",
+        metrics: {
+          countRank: 34,
+          densityRank: 37,
+          septicBlockGroupPct: 35.4,
+          parcelGapPct: 0.0
+        }
+      },
+      "NV": {
+        name: "Nevada",
+        modernSignal: "Lower statewide signal, still property-specific",
+        exposure: "Modeled medium-estimate exposure rank #46 by count and #48 by statewide density.",
+        blockGroupSignal: "11.8% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "In Nevada, a lower statewide signal does not rule out septic on a specific property, especially outside confirmed municipal sewer service.",
+        nextStep: "Do not rely on the state average. Verify the property through sewer billing, local records, disclosures, 811, and septic-specific locating when the work area is uncertain.",
+        metrics: {
+          countRank: 46,
+          densityRank: 48,
+          septicBlockGroupPct: 11.8,
+          parcelGapPct: 0.2
+        }
+      },
+      "NH": {
+        name: "New Hampshire",
+        modernSignal: "High density and strong local septic signal",
+        exposure: "Modeled medium-estimate exposure rank #38 by count and #10 by statewide density.",
+        blockGroupSignal: "51.6% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "New Hampshire has a strong rural or historical septic signal, but the same records-first logic also applies near town edges and partially sewered communities.",
+        nextStep: "Treat septic location as a real planning issue before posts, trenches, grading, pools, sheds, additions, or landscaping. Check records, call 811, and locate private septic components when layout is unclear.",
+        metrics: {
+          countRank: 38,
+          densityRank: 10,
+          septicBlockGroupPct: 51.6,
+          parcelGapPct: 0.2
+        }
+      },
+      "NJ": {
+        name: "New Jersey",
+        modernSignal: "Urban/suburban hidden-septic signal",
+        exposure: "Modeled medium-estimate exposure rank #35 by count and #6 by statewide density.",
+        blockGroupSignal: "9.1% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "New Jersey has developed-looking areas where septic can still be overlooked, especially older suburbs, coastal or lake communities, large-lot neighborhoods, and sewer-edge streets.",
+        nextStep: "Confirm the home has a municipal sewer account or connection record, then check local records before digging. Call 811, but do not assume 811 marks private septic components.",
+        metrics: {
+          countRank: 35,
+          densityRank: 6,
+          septicBlockGroupPct: 9.1,
+          parcelGapPct: 0.2
+        }
       },
       "NM": {
         name: "New Mexico",
-        usage: "Lower statewide / high rural localized signal",
-        risk: "Moderate",
-        riskClass: "risk-med",
-        confidence: "Localized density signal + county-record verification needed",
-        factors: "New Mexico has sewered urban areas, but onsite wastewater systems remain relevant on rural lots, private-well properties, unincorporated land, and homes outside municipal sewer service. Dry climate and open land can make statewide averages feel safer than the property-level facts justify.",
-        nextStep: "Check county or state environmental records, look for any prior septic permit or site plan, call 811 before digging, and consider septic-specific locating when the tank, lines, or disposal area are not clearly documented."
+        modernSignal: "Moderate localized signal",
+        exposure: "Modeled medium-estimate exposure rank #40 by count and #45 by statewide density.",
+        blockGroupSignal: "35.7% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Moderate confidence: some parcel-data gaps may affect local estimates.",
+        urbanCaution: "In New Mexico, a lower statewide signal does not rule out septic on a specific property, especially outside confirmed municipal sewer service.",
+        nextStep: "Do not rely on the state average. Verify the property through sewer billing, local records, disclosures, 811, and septic-specific locating when the work area is uncertain.",
+        metrics: {
+          countRank: 40,
+          densityRank: 45,
+          septicBlockGroupPct: 35.7,
+          parcelGapPct: 5.1
+        }
       },
-      "OTHER": {
+      "NY": {
+        name: "New York",
+        modernSignal: "Urban/suburban hidden-septic signal",
+        exposure: "Modeled medium-estimate exposure rank #7 by count and #15 by statewide density.",
+        blockGroupSignal: "17.6% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "New York has developed-looking areas where septic can still be overlooked, especially older suburbs, coastal or lake communities, large-lot neighborhoods, and sewer-edge streets.",
+        nextStep: "Confirm the home has a municipal sewer account or connection record, then check local records before digging. Call 811, but do not assume 811 marks private septic components.",
+        metrics: {
+          countRank: 7,
+          densityRank: 15,
+          septicBlockGroupPct: 17.6,
+          parcelGapPct: 0.3
+        }
+      },
+      "NC": {
+        name: "North Carolina",
+        modernSignal: "High density and strong local septic signal",
+        exposure: "Modeled medium-estimate exposure rank #2 by count and #7 by statewide density.",
+        blockGroupSignal: "45.3% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "North Carolina has enough modeled septic exposure that city edges, fast-growing suburbs, and older subdivisions should still be checked before digging.",
+        nextStep: "Treat septic location as a real planning issue before posts, trenches, grading, pools, sheds, additions, or landscaping. Check records, call 811, and locate private septic components when layout is unclear.",
+        metrics: {
+          countRank: 2,
+          densityRank: 7,
+          septicBlockGroupPct: 45.3,
+          parcelGapPct: 0.8
+        }
+      },
+      "ND": {
+        name: "North Dakota",
+        modernSignal: "Strong rural or county-level signal",
+        exposure: "Modeled medium-estimate exposure rank #44 by count and #43 by statewide density.",
+        blockGroupSignal: "47.9% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "North Dakota has a strong rural or historical septic signal, but the same records-first logic also applies near town edges and partially sewered communities.",
+        nextStep: "Treat septic location as a real planning issue before posts, trenches, grading, pools, sheds, additions, or landscaping. Check records, call 811, and locate private septic components when layout is unclear.",
+        metrics: {
+          countRank: 44,
+          densityRank: 43,
+          septicBlockGroupPct: 47.9,
+          parcelGapPct: 0.3
+        }
+      },
+      "OH": {
+        name: "Ohio",
+        modernSignal: "Urban/suburban hidden-septic signal",
+        exposure: "Modeled medium-estimate exposure rank #4 by count and #8 by statewide density.",
+        blockGroupSignal: "27.4% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "Ohio has developed-looking areas where septic can still be overlooked, especially older suburbs, coastal or lake communities, large-lot neighborhoods, and sewer-edge streets.",
+        nextStep: "Confirm the home has a municipal sewer account or connection record, then check local records before digging. Call 811, but do not assume 811 marks private septic components.",
+        metrics: {
+          countRank: 4,
+          densityRank: 8,
+          septicBlockGroupPct: 27.4,
+          parcelGapPct: 0.0
+        }
+      },
+      "OK": {
+        name: "Oklahoma",
+        modernSignal: "Moderate localized signal",
+        exposure: "Modeled medium-estimate exposure rank #21 by count and #30 by statewide density.",
+        blockGroupSignal: "40.3% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "In Oklahoma, a lower statewide signal does not rule out septic on a specific property, especially outside confirmed municipal sewer service.",
+        nextStep: "Do not rely on the state average. Verify the property through sewer billing, local records, disclosures, 811, and septic-specific locating when the work area is uncertain.",
+        metrics: {
+          countRank: 21,
+          densityRank: 30,
+          septicBlockGroupPct: 40.3,
+          parcelGapPct: 0.0
+        }
+      },
+      "OR": {
+        name: "Oregon",
+        modernSignal: "Moderate localized signal",
+        exposure: "Modeled medium-estimate exposure rank #29 by count and #39 by statewide density.",
+        blockGroupSignal: "27.3% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "In Oregon, a lower statewide signal does not rule out septic on a specific property, especially outside confirmed municipal sewer service.",
+        nextStep: "Do not rely on the state average. Verify the property through sewer billing, local records, disclosures, 811, and septic-specific locating when the work area is uncertain.",
+        metrics: {
+          countRank: 29,
+          densityRank: 39,
+          septicBlockGroupPct: 27.3,
+          parcelGapPct: 0.0
+        }
+      },
+      "PA": {
+        name: "Pennsylvania",
+        modernSignal: "Urban/suburban hidden-septic signal",
+        exposure: "Modeled medium-estimate exposure rank #3 by count and #9 by statewide density.",
+        blockGroupSignal: "28.0% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "Pennsylvania has developed-looking areas where septic can still be overlooked, especially older suburbs, coastal or lake communities, large-lot neighborhoods, and sewer-edge streets.",
+        nextStep: "Confirm the home has a municipal sewer account or connection record, then check local records before digging. Call 811, but do not assume 811 marks private septic components.",
+        metrics: {
+          countRank: 3,
+          densityRank: 9,
+          septicBlockGroupPct: 28.0,
+          parcelGapPct: 0.1
+        }
+      },
+      "RI": {
+        name: "Rhode Island",
+        modernSignal: "Urban/suburban hidden-septic signal",
+        exposure: "Modeled medium-estimate exposure rank #48 by count and #2 by statewide density.",
+        blockGroupSignal: "12.1% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "Rhode Island has developed-looking areas where septic can still be overlooked, especially older suburbs, coastal or lake communities, large-lot neighborhoods, and sewer-edge streets.",
+        nextStep: "Confirm the home has a municipal sewer account or connection record, then check local records before digging. Call 811, but do not assume 811 marks private septic components.",
+        metrics: {
+          countRank: 48,
+          densityRank: 2,
+          septicBlockGroupPct: 12.1,
+          parcelGapPct: 0.9
+        }
+      },
+      "SC": {
+        name: "South Carolina",
+        modernSignal: "High density and strong local septic signal",
+        exposure: "Modeled medium-estimate exposure rank #18 by count and #12 by statewide density.",
+        blockGroupSignal: "47.0% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "South Carolina has a strong rural or historical septic signal, but the same records-first logic also applies near town edges and partially sewered communities.",
+        nextStep: "Treat septic location as a real planning issue before posts, trenches, grading, pools, sheds, additions, or landscaping. Check records, call 811, and locate private septic components when layout is unclear.",
+        metrics: {
+          countRank: 18,
+          densityRank: 12,
+          septicBlockGroupPct: 47.0,
+          parcelGapPct: 0.8
+        }
+      },
+      "SD": {
+        name: "South Dakota",
+        modernSignal: "Strong rural or county-level signal",
+        exposure: "Modeled medium-estimate exposure rank #41 by count and #42 by statewide density.",
+        blockGroupSignal: "55.8% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "South Dakota has a strong rural or historical septic signal, but the same records-first logic also applies near town edges and partially sewered communities.",
+        nextStep: "Treat septic location as a real planning issue before posts, trenches, grading, pools, sheds, additions, or landscaping. Check records, call 811, and locate private septic components when layout is unclear.",
+        metrics: {
+          countRank: 41,
+          densityRank: 42,
+          septicBlockGroupPct: 55.8,
+          parcelGapPct: 2.0
+        }
+      },
+      "TN": {
+        name: "Tennessee",
+        modernSignal: "High total and high density signal",
+        exposure: "Modeled medium-estimate exposure rank #8 by count and #11 by statewide density.",
+        blockGroupSignal: "42.8% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "Tennessee has enough modeled septic exposure that city edges, fast-growing suburbs, and older subdivisions should still be checked before digging.",
+        nextStep: "Treat septic location as a real planning issue before posts, trenches, grading, pools, sheds, additions, or landscaping. Check records, call 811, and locate private septic components when layout is unclear.",
+        metrics: {
+          countRank: 8,
+          densityRank: 11,
+          septicBlockGroupPct: 42.8,
+          parcelGapPct: 0.3
+        }
+      },
+      "TX": {
+        name: "Texas",
+        modernSignal: "High total exposure signal",
+        exposure: "Modeled medium-estimate exposure rank #1 by count and #34 by statewide density.",
+        blockGroupSignal: "21.8% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "Texas has enough modeled septic exposure that city edges, fast-growing suburbs, and older subdivisions should still be checked before digging.",
+        nextStep: "Treat septic location as a real planning issue before posts, trenches, grading, pools, sheds, additions, or landscaping. Check records, call 811, and locate private septic components when layout is unclear.",
+        metrics: {
+          countRank: 1,
+          densityRank: 34,
+          septicBlockGroupPct: 21.8,
+          parcelGapPct: 0.0
+        }
+      },
+      "UT": {
+        name: "Utah",
+        modernSignal: "Lower statewide signal, still property-specific",
+        exposure: "Modeled medium-estimate exposure rank #43 by count and #44 by statewide density.",
+        blockGroupSignal: "17.4% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "In Utah, a lower statewide signal does not rule out septic on a specific property, especially outside confirmed municipal sewer service.",
+        nextStep: "Do not rely on the state average. Verify the property through sewer billing, local records, disclosures, 811, and septic-specific locating when the work area is uncertain.",
+        metrics: {
+          countRank: 43,
+          densityRank: 44,
+          septicBlockGroupPct: 17.4,
+          parcelGapPct: 1.4
+        }
+      },
+      "VT": {
+        name: "Vermont",
+        modernSignal: "Strong rural or county-level signal",
+        exposure: "Modeled medium-estimate exposure rank #42 by count and #21 by statewide density.",
+        blockGroupSignal: "70.8% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "Vermont has a strong rural or historical septic signal, but the same records-first logic also applies near town edges and partially sewered communities.",
+        nextStep: "Treat septic location as a real planning issue before posts, trenches, grading, pools, sheds, additions, or landscaping. Check records, call 811, and locate private septic components when layout is unclear.",
+        metrics: {
+          countRank: 42,
+          densityRank: 21,
+          septicBlockGroupPct: 70.8,
+          parcelGapPct: 0.9
+        }
+      },
+      "VA": {
+        name: "Virginia",
+        modernSignal: "Moderate localized signal",
+        exposure: "Modeled medium-estimate exposure rank #13 by count and #14 by statewide density.",
+        blockGroupSignal: "30.8% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "In Virginia, a lower statewide signal does not rule out septic on a specific property, especially outside confirmed municipal sewer service.",
+        nextStep: "Do not rely on the state average. Verify the property through sewer billing, local records, disclosures, 811, and septic-specific locating when the work area is uncertain.",
+        metrics: {
+          countRank: 13,
+          densityRank: 14,
+          septicBlockGroupPct: 30.8,
+          parcelGapPct: 0.9
+        }
+      },
+      "WA": {
+        name: "Washington",
+        modernSignal: "Lower statewide signal, still property-specific",
+        exposure: "Modeled medium-estimate exposure rank #25 by count and #33 by statewide density.",
+        blockGroupSignal: "22.2% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "In Washington, a lower statewide signal does not rule out septic on a specific property, especially outside confirmed municipal sewer service.",
+        nextStep: "Do not rely on the state average. Verify the property through sewer billing, local records, disclosures, 811, and septic-specific locating when the work area is uncertain.",
+        metrics: {
+          countRank: 25,
+          densityRank: 33,
+          septicBlockGroupPct: 22.2,
+          parcelGapPct: 0.4
+        }
+      },
+      "WV": {
+        name: "West Virginia",
+        modernSignal: "Strong rural or county-level signal",
+        exposure: "Modeled medium-estimate exposure rank #26 by count and #19 by statewide density.",
+        blockGroupSignal: "61.6% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "West Virginia has a strong rural or historical septic signal, but the same records-first logic also applies near town edges and partially sewered communities.",
+        nextStep: "Treat septic location as a real planning issue before posts, trenches, grading, pools, sheds, additions, or landscaping. Check records, call 811, and locate private septic components when layout is unclear.",
+        metrics: {
+          countRank: 26,
+          densityRank: 19,
+          septicBlockGroupPct: 61.6,
+          parcelGapPct: 0.0
+        }
+      },
+      "WI": {
+        name: "Wisconsin",
+        modernSignal: "Moderate localized signal",
+        exposure: "Modeled medium-estimate exposure rank #12 by count and #23 by statewide density.",
+        blockGroupSignal: "38.4% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "In Wisconsin, a lower statewide signal does not rule out septic on a specific property, especially outside confirmed municipal sewer service.",
+        nextStep: "Do not rely on the state average. Verify the property through sewer billing, local records, disclosures, 811, and septic-specific locating when the work area is uncertain.",
+        metrics: {
+          countRank: 12,
+          densityRank: 23,
+          septicBlockGroupPct: 38.4,
+          parcelGapPct: 0.1
+        }
+      },
+      "WY": {
+        name: "Wyoming",
+        modernSignal: "Strong rural or county-level signal",
+        exposure: "Modeled medium-estimate exposure rank #45 by count and #47 by statewide density.",
+        blockGroupSignal: "49.0% of block groups show a medium-estimate septic-supported signal.",
+        confidence: "Good planning signal, but property records are still needed for an address-level answer.",
+        urbanCaution: "Wyoming has a strong rural or historical septic signal, but the same records-first logic also applies near town edges and partially sewered communities.",
+        nextStep: "Treat septic location as a real planning issue before posts, trenches, grading, pools, sheds, additions, or landscaping. Check records, call 811, and locate private septic components when layout is unclear.",
+        metrics: {
+          countRank: 45,
+          densityRank: 47,
+          septicBlockGroupPct: 49.0,
+          parcelGapPct: 1.8
+        }
+      },
+      "AK": {
+        name: "Alaska",
+        modernSignal: "Not summarized in the conterminous-U.S. USGS rollup",
+        exposure: "The USGS septic-density files used for this V2 analysis summarize the conterminous United States, so this page does not assign a modeled density rank for Alaska.",
+        blockGroupSignal: "Use local wastewater, health department, and property records for this state.",
+        confidence: "Do not infer low risk from missing USGS rollup data. The right answer is still property-specific.",
+        urbanCaution: "A developed-looking property can still need wastewater verification before digging.",
+        nextStep: "Confirm sewer connection records or local onsite wastewater records, call 811 before digging, and use septic-specific locating when the system layout is unclear.",
+        metrics: {
+          countRank: null,
+          densityRank: null,
+          septicBlockGroupPct: null,
+          parcelGapPct: null
+        }
+      },
+      "HI": {
+        name: "Hawaii",
+        modernSignal: "Not summarized in the conterminous-U.S. USGS rollup",
+        exposure: "The USGS septic-density files used for this V2 analysis summarize the conterminous United States, so this page does not assign a modeled density rank for Hawaii.",
+        blockGroupSignal: "Use local wastewater, health department, and property records for this state.",
+        confidence: "Do not infer low risk from missing USGS rollup data. The right answer is still property-specific.",
+        urbanCaution: "A developed-looking property can still need wastewater verification before digging.",
+        nextStep: "Confirm sewer connection records or local onsite wastewater records, call 811 before digging, and use septic-specific locating when the system layout is unclear.",
+        metrics: {
+          countRank: null,
+          densityRank: null,
+          septicBlockGroupPct: null,
+          parcelGapPct: null
+        }
+      },
+      OTHER: {
         name: "National Context",
-        usage: "About 1 in 5 U.S. households use septic or decentralized systems",
-        risk: "Variable",
-        riskClass: "risk-med",
-        confidence: "EPA national context + local verification needed",
-        factors: "National averages are useful for context, but septic risk is property-specific. Rural lots, unincorporated areas, older homes, private wells, missing records, and past additions can all increase uncertainty before digging.",
-        nextStep: "Check local health department or county records, call 811 before digging, and consider septic-specific locating if the tank, lid, line, or drain field location is not clearly documented."
+        modernSignal: "Property-specific verification needed",
+        exposure: "National averages are useful context, but they do not answer whether one address has septic.",
+        blockGroupSignal: "Use state and local records when the property status is unclear.",
+        confidence: "The safest answer comes from sewer billing, local records, 811, and septic-specific locating when needed.",
+        urbanCaution: "A developed-looking neighborhood does not prove a home is connected to municipal sewer.",
+        nextStep: "Confirm whether the home has a sewer account or local sewer connection record. If not clear, check health department records and consider septic-specific locating before digging.",
+        metrics: {
+          countRank: null,
+          densityRank: null,
+          septicBlockGroupPct: null,
+          parcelGapPct: null
+        }
       }
     };
 
     const selector = document.getElementById("stateSelect");
     const card = document.getElementById("resultCard");
-    const phoneCta = document.getElementById("phoneCta");
-
-    if (SITE_PHONE_DISPLAY !== "REPLACE WITH PHONE") {
-      phoneCta.innerText = `Need help finding septic components? Call ${SITE_PHONE_DISPLAY}`;
-    }
-
-    if (SITE_PHONE_TEL !== "REPLACE_WITH_PHONE") {
-      phoneCta.href = `tel:${SITE_PHONE_TEL}`;
-    }
 
     selector.addEventListener("change", function () {
-      const val = this.value;
-
-      if (val && stateData[val]) {
-        const data = stateData[val];
-        document.getElementById("resStateName").innerText = data.name;
-        document.getElementById("resUsage").innerText = data.usage;
-        document.getElementById("resRisk").innerText = data.risk;
-        document.getElementById("resRisk").className = "stat-value " + data.riskClass;
-        document.getElementById("resConfidence").innerText = data.confidence;
-        document.getElementById("resFactors").innerText = data.factors;
-        document.getElementById("resNextStep").innerText = data.nextStep;
-        card.style.display = "block";
-      } else {
-        card.style.display = "none";
+      const data = stateData[this.value];
+      if (!data) {
+        card.classList.remove("is-visible");
+        return;
       }
+
+      document.getElementById("resStateName").innerText = data.name;
+      document.getElementById("resModernSignal").innerText = data.modernSignal;
+      document.getElementById("resExposure").innerText = data.exposure;
+      document.getElementById("resBlockGroupSignal").innerText = data.blockGroupSignal;
+      document.getElementById("resUrbanCaution").innerText = data.urbanCaution;
+      document.getElementById("resConfidence").innerText = data.confidence;
+      document.getElementById("resNextStep").innerText = data.nextStep;
+      card.classList.add("is-visible");
     });
   </script>
 </body>
