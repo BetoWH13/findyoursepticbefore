@@ -21,6 +21,7 @@ This website does not provide exact property-specific septic locations, surveyin
 - Project-specific septic checks before sheds, deck posts, patios, pools, hardscape, and other permanent yard structures
 - 811-related clarification pages for marking colors, utility depth limits, and what paint or flags do not prove
 - New-homeowner guidance for buyers who cannot find the septic tank after purchasing a house
+- State-level septic presence signals using historical Census sewage-disposal baselines, modern EPA national context, and USGS septic-density modeling caveats
 - General homeowner guidance related to septic layout clues and search logic
 
 ## Audience
@@ -73,6 +74,7 @@ Do not describe the site as:
 - /septic-line-marking-colors/
 - /does-811-mark-depth/
 - /bought-house-cant-find-septic-tank/
+- /septic-system-usage-by-state/
 
 ## Content style
 
